@@ -1,29 +1,4 @@
-﻿// Priotity:
-//  1.Move functionality of Transform to Camera [DONE]
-//  2.Move shaders to seperate files and create a function to load them [DONE]
-//  3.Implement lighting [DONE]
-//  4.Add colored objects [DONE]
-//  5.Refactor code to be understandable and to setup renderer to work independently with only few arguments passed (together with shaders) [DONE]
-//  6.Add shadow mapping
-//  7.Standarize coordinate systems
-//  8.Renderer finished
-
-// Other:
-//  1.Implement MSAA as anti aliasing method [DONE]
-//  2.Move texture to object class [DONE]
-//  3.Prevent rendering objects when not visible [PARTIALY DONE]
-//  4.Take care of structs.h
-//  5.Implement specular maps
-//  6.Find a way to add more than 1 light source
-//  7.Add different types of light source (directional, spot) and associated shadow mapping
-//  8.Add bloom
-//  9.Implement transparency
-//  10.Try double precision
-//  11.Try to optimize if possible (find a way to measure particular tasks' exec time)
-//  12.Try Dijkstra's Algorithm to generate indices from vertices {?NOT IN RENDERER?}
-//  13.Make a mesh generator (from vertices to indices and normals dependent on shading model - flat or smooth) {?NOT IN RENDERER?}
-
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <fstream>
 #include <glad/glad.h>
