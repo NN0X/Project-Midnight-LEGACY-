@@ -5,6 +5,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "log.h"
+
 struct fRGBA
 {
     float r, g, b, a;
@@ -63,9 +65,4 @@ struct dVector2
 struct dVector3
 {
     double x, y, z;
-};
-
-struct Texture
-{
-    GLuint texture;
 };

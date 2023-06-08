@@ -4,23 +4,24 @@
 //  3.Implement lighting [DONE]
 //  4.Add colored objects [DONE]
 //  5.Refactor code to be understandable and to setup renderer to work independently with only few arguments passed (together with shaders) [DONE]
-//  6.Implement transparency
-//  7.Add shadow mapping
-//  8.Standarize coordinate systems
-//  9.Renderer finished
+//  6.Add shadow mapping
+//  7.Standarize coordinate systems
+//  8.Renderer finished
 
 // Other:
 //  1.Implement MSAA as anti aliasing method [DONE]
-//  2.Move texture to object class
-//  3.Prevent rendering objects when not visible
-//  4.Implement specular maps
-//  5.Find a way to add more than 1 light source
-//  6.Add different types of light source (directional, spot) and associated shadow mapping
-//  7.Add bloom
-//  8.Try double precision
-//  9.Try to optimize if possible (find a way to measure particular tasks' exec time)
-//  10.Try Dijkstra's Algorithm to generate indices from vertices {?NOT IN RENDERER?}
-//  11.Make a mesh generator (from vertices to indices and normals dependent on shading model - flat or smooth) {?NOT IN RENDERER?}
+//  2.Move texture to object class [DONE]
+//  3.Prevent rendering objects when not visible [PARTIALY DONE]
+//  4.Take care of structs.h
+//  5.Implement specular maps
+//  6.Find a way to add more than 1 light source
+//  7.Add different types of light source (directional, spot) and associated shadow mapping
+//  8.Add bloom
+//  9.Implement transparency
+//  10.Try double precision
+//  11.Try to optimize if possible (find a way to measure particular tasks' exec time)
+//  12.Try Dijkstra's Algorithm to generate indices from vertices {?NOT IN RENDERER?}
+//  13.Make a mesh generator (from vertices to indices and normals dependent on shading model - flat or smooth) {?NOT IN RENDERER?}
 
 #include <iostream>
 #include <vector>
@@ -34,18 +35,18 @@
 
 #include "window.h"
 
-Texture ImportImage(Renderer renderer, int textureFiltering, std::string path)
+GLuint ImportImage(Object object, int textureFiltering, std::string path)
 {
-    Texture texture;
+    GLuint texture;
     iVector2 size;
     int numCol;
 
     stbi_set_flip_vertically_on_load(true);
     unsigned char *bytes = stbi_load(("resources/textures/" + path).data(), &size.x, &size.y, &numCol, 0);
 
-    glGenTextures(1, &texture.texture);
+    glGenTextures(1, &texture);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture.texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, textureFiltering);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, textureFiltering);
@@ -56,12 +57,9 @@ Texture ImportImage(Renderer renderer, int textureFiltering, std::string path)
     stbi_image_free(bytes);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    for (Object object : renderer.GetObjects())
-    {
-        GLuint textureUniform = glGetUniformLocation(object.GetShader(), "tex");
-        glUseProgram(object.GetShader());
-        glUniform1i(textureUniform, 0);
-    }
+    GLuint textureUniform = glGetUniformLocation(object.GetShader(), "tex");
+    glUseProgram(object.GetShader());
+    glUniform1i(textureUniform, 0);
 
     return texture;
 }
@@ -146,7 +144,7 @@ Camera Inputs(Window window, float speed, float sensitivity)
 }
 //
 
-std::pair<Window, int> RendererLoop(Window window, std::vector<Texture> textures, int frames)
+std::pair<Window, int> RendererLoop(Window window, int frames)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -157,7 +155,7 @@ std::pair<Window, int> RendererLoop(Window window, std::vector<Texture> textures
     renderer.SetCamera(camera);
     window.renderer = renderer;
 
-    renderer.DrawObjects(textures);
+    renderer.DrawObjects();
 
     glfwSwapBuffers(window.window);
 
@@ -214,10 +212,10 @@ int main()
     Object object({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
     object.AttachBuffers(vertices, indices);
     object.AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl");
+    object.SetTexture(ImportImage(object, GL_LINEAR, "default.png"));
     renderer.AttachObject(object);
 
     object.SetPosition({-1.0f, 0.0f, 0.0f});
-    ;
     renderer.AttachObject(object);
 
     object.SetPosition({1.0f, 1.0f, 1.0f});
@@ -227,18 +225,12 @@ int main()
     renderer.SetLightSource(lightSource);
     window.AttachRenderer(renderer);
 
-    std::vector<Texture> textures;
-    Texture texture = ImportImage(renderer, GL_LINEAR, "default.png");
-    textures.push_back(texture);
-    textures.push_back(texture);
-    textures.push_back(texture);
-
     int frames = 0;
     double start = glfwGetTime();
 
     while (!glfwWindowShouldClose(window.window))
     {
-        auto data = RendererLoop(window, textures, frames);
+        auto data = RendererLoop(window, frames);
         window = data.first;
         frames = data.second;
     }

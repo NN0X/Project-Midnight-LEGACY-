@@ -113,6 +113,11 @@ void Object::SetEmission(fRGB pEmission)
     emission = pEmission;
 }
 
+void Object::SetTexture(GLuint pTexture)
+{
+    texture = pTexture;
+}
+
 fVector3 Object::GetPosition() { return position; }
 fRGBA Object::GetColor() { return color; }
 fRGB Object::GetEmission() { return emission; }
@@ -121,5 +126,6 @@ GLuint Object::GetShader() { return shaderProgram; }
 GLuint Object::GetVAO() { return VAO; }
 GLuint Object::GetVBO() { return VBO; }
 GLuint Object::GetEBO() { return EBO; }
+GLuint Object::GetTexture() { return texture; }
 int Object::GetSizeOfVertices() { return sizeOfVertices; }
 int Object::GetSizeOfIndices() { return sizeOfIndices; }

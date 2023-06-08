@@ -16,27 +16,36 @@ Renderer::Renderer(u16Vector2 pBegin, u16Vector2 pEnd, bool pMSAA)
     size = {uint16_t(end.x - begin.x), uint16_t(end.y - begin.y)};
 }
 
-void Renderer::DrawObjects(std::vector<Texture> pTextures)
+void Renderer::DrawObjects()
 {
-    for (int index = 0; index < objects.size(); index++)
+    for (Object object : objects)
     {
-        GLuint shaderProgram = objects[index].GetShader();
+        // TEMP
+        fVector3 pointA = object.GetPosition();
+        fVector3 pointB = camera.GetPosition();
+        float distance = sqrt(pow((pointB.x - pointA.x), 2) + pow((pointB.y - pointA.y), 2) + pow((pointB.z - pointA.z), 2));
+        //
 
-        glUseProgram(shaderProgram);
-        glBindTexture(GL_TEXTURE_2D, pTextures[index].texture);
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "camMatrix"), 1, GL_FALSE, glm::value_ptr(camera.GetMatrix()));
-        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(objects[index].GetMatrix()));
-        glUniform3f(glGetUniformLocation(shaderProgram, "cameraPos"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-        glUniform4f(glGetUniformLocation(shaderProgram, "objColor"), objects[index].GetColor().r, objects[index].GetColor().g, objects[index].GetColor().b, objects[index].GetColor().a);
-        glUniform3f(glGetUniformLocation(shaderProgram, "objEmission"), objects[index].GetEmission().r, objects[index].GetEmission().g, objects[index].GetEmission().b);
-        glUniform4f(glGetUniformLocation(shaderProgram, "lightColor"), lightSource.GetColor().r, lightSource.GetColor().g, lightSource.GetColor().b, lightSource.GetColor().a);
-        glUniform3f(glGetUniformLocation(shaderProgram, "lightPos"), lightSource.GetPosition().x, lightSource.GetPosition().y, lightSource.GetPosition().z);
-        glUniform1f(glGetUniformLocation(shaderProgram, "ambient"), lightSource.GetParams(0));
-        glUniform1f(glGetUniformLocation(shaderProgram, "specularStrenght"), lightSource.GetParams(1));
-        glUniform1f(glGetUniformLocation(shaderProgram, "lightIntensityFalloff"), lightSource.GetParams(2));
-        glUniform1f(glGetUniformLocation(shaderProgram, "lightEffectiveRangeInverse"), lightSource.GetParams(3));
-        glBindVertexArray(objects[index].GetVAO());
-        glDrawElements(GL_TRIANGLES, objects[index].GetSizeOfIndices(), GL_UNSIGNED_INT, 0);
+        if (distance < camera.GetFarClipping())
+        {
+            GLuint shaderProgram = object.GetShader();
+
+            glUseProgram(shaderProgram);
+            glBindTexture(GL_TEXTURE_2D, object.GetTexture());
+            glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "camMatrix"), 1, GL_FALSE, glm::value_ptr(camera.GetMatrix()));
+            glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(object.GetMatrix()));
+            glUniform3f(glGetUniformLocation(shaderProgram, "cameraPos"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
+            glUniform4f(glGetUniformLocation(shaderProgram, "objColor"), object.GetColor().r, object.GetColor().g, object.GetColor().b, object.GetColor().a);
+            glUniform3f(glGetUniformLocation(shaderProgram, "objEmission"), object.GetEmission().r, object.GetEmission().g, object.GetEmission().b);
+            glUniform4f(glGetUniformLocation(shaderProgram, "lightColor"), lightSource.GetColor().r, lightSource.GetColor().g, lightSource.GetColor().b, lightSource.GetColor().a);
+            glUniform3f(glGetUniformLocation(shaderProgram, "lightPos"), lightSource.GetPosition().x, lightSource.GetPosition().y, lightSource.GetPosition().z);
+            glUniform1f(glGetUniformLocation(shaderProgram, "ambient"), lightSource.GetParams(0));
+            glUniform1f(glGetUniformLocation(shaderProgram, "specularStrenght"), lightSource.GetParams(1));
+            glUniform1f(glGetUniformLocation(shaderProgram, "lightIntensityFalloff"), lightSource.GetParams(2));
+            glUniform1f(glGetUniformLocation(shaderProgram, "lightEffectiveRangeInverse"), lightSource.GetParams(3));
+            glBindVertexArray(object.GetVAO());
+            glDrawElements(GL_TRIANGLES, object.GetSizeOfIndices(), GL_UNSIGNED_INT, 0);
+        }
     }
 }
 

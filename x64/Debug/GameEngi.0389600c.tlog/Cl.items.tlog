@@ -2,6 +2,7 @@ D:\Dev\GameEngine\dependencies\include\glad\glad.c;D:\Dev\GameEngine\x64\Debug\g
 D:\Dev\GameEngine\dependencies\include\stb\stb.cpp;D:\Dev\GameEngine\x64\Debug\stb.obj
 D:\Dev\GameEngine\source\camera.cpp;D:\Dev\GameEngine\x64\Debug\camera.obj
 D:\Dev\GameEngine\source\lightSource.cpp;D:\Dev\GameEngine\x64\Debug\lightSource.obj
+D:\Dev\GameEngine\source\log.cpp;D:\Dev\GameEngine\x64\Debug\log.obj
 D:\Dev\GameEngine\source\main.cpp;D:\Dev\GameEngine\x64\Debug\main.obj
 D:\Dev\GameEngine\source\object.cpp;D:\Dev\GameEngine\x64\Debug\object.obj
 D:\Dev\GameEngine\source\renderer.cpp;D:\Dev\GameEngine\x64\Debug\renderer.obj

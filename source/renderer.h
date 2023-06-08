@@ -20,7 +20,7 @@ public:
     Renderer();
     Renderer(u16Vector2, u16Vector2, bool);
 
-    void DrawObjects(std::vector<Texture>);
+    void DrawObjects();
     void AttachObject(Object);
     void DetachObject(int);
     void Shutdown();
