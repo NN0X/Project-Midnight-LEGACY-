@@ -1,6 +1,4 @@
-﻿// SETUP GIT REPO
-
-// Priotity:
+﻿// Priotity:
 //  1.Move functionality of Transform to Camera [DONE]
 //  2.Move shaders to seperate files and create a function to load them [DONE]
 //  3.Implement lighting [DONE]
