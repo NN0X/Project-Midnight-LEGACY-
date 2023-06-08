@@ -71,20 +71,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Dev\GameEngine\dependencies\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Dev\GameEngine\dependencies\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Dev\GameEngine\dependencies\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Dev\GameEngine\dependencies\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Dev\GameEngine\dependencies\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Dev\GameEngine\dependencies\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Dev\GameEngine\dependencies\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Dev\GameEngine\dependencies\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
