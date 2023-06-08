@@ -1,2 +1,26 @@
 ﻿  glad.c
-D:\Dev\GameEngine\dependencies\include\glad\glad.c(25,10): fatal  error C1083: Nie można otworzyć pliku dołącz: 'glad/glad.h': No such file or directory
+  stb.cpp
+  camera.cpp
+  lightSource.cpp
+  main.cpp
+  object.cpp
+  renderer.cpp
+  window.cpp
+  Generowanie kodu...
+  LINK : nie znaleziono elementu D:\Dev\GameEngine\x64\Debug\GameEnginePrototype.exe ani nie został on skompilowany podczas ostatniego konsolidowania przyrostowego; zostanie wykonana pełna konsolidacja
+glfw3.lib(window.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(window.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(input.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(input.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(context.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(context.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(init.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(init.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(monitor.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(monitor.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(win32_window.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(win32_window.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(win32_thread.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(win32_thread.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(win32_joystick.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(win32_joystick.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(win32_time.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(win32_time.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(win32_init.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(win32_init.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(win32_monitor.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(win32_monitor.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(vulkan.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(vulkan.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(wgl_context.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(wgl_context.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(egl_context.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(egl_context.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+glfw3.lib(osmesa_context.obj) : warning LNK4099: nie znaleziono pliku PDB „” z elementem „glfw3.lib(osmesa_context.obj)” lub w pozycji „”; obiekt zostanie skonsolidowany bez informacji debugowania
+  GameEnginePrototype.vcxproj -> D:\Dev\GameEngine\x64\Debug\GameEnginePrototype.exe

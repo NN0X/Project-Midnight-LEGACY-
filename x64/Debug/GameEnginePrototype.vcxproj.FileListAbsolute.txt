@@ -1,1 +1,2 @@
 D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\GameEnginePrototype.exe
+D:\Dev\GameEngine\x64\Debug\GameEnginePrototype.exe

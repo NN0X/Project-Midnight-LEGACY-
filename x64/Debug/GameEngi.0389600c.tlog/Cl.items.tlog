@@ -1,8 +1,8 @@
-D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\include\glad\glad.c;D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\glad.obj
-D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\dependencies\include\stb\stb.cpp;D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\stb.obj
-D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\source\camera.cpp;D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\camera.obj
-D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\source\lightSource.cpp;D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\lightSource.obj
-D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\source\main.cpp;D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\main.obj
-D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\source\object.cpp;D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\object.obj
-D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\source\renderer.cpp;D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\renderer.obj
-D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\source\window.cpp;D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\window.obj
+D:\Dev\GameEngine\dependencies\include\glad\glad.c;D:\Dev\GameEngine\x64\Debug\glad.obj
+D:\Dev\GameEngine\dependencies\include\stb\stb.cpp;D:\Dev\GameEngine\x64\Debug\stb.obj
+D:\Dev\GameEngine\source\camera.cpp;D:\Dev\GameEngine\x64\Debug\camera.obj
+D:\Dev\GameEngine\source\lightSource.cpp;D:\Dev\GameEngine\x64\Debug\lightSource.obj
+D:\Dev\GameEngine\source\main.cpp;D:\Dev\GameEngine\x64\Debug\main.obj
+D:\Dev\GameEngine\source\object.cpp;D:\Dev\GameEngine\x64\Debug\object.obj
+D:\Dev\GameEngine\source\renderer.cpp;D:\Dev\GameEngine\x64\Debug\renderer.obj
+D:\Dev\GameEngine\source\window.cpp;D:\Dev\GameEngine\x64\Debug\window.obj
