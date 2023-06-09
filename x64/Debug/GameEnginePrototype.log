@@ -1,10 +1,1 @@
-﻿  camera.cpp
-  lightSource.cpp
-  log.cpp
-  main.cpp
-  object.cpp
-  renderer.cpp
-D:\Dev\GameEngine\source\renderer.cpp(26,24): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
-  window.cpp
-  Generowanie kodu...
-  GameEnginePrototype.vcxproj -> D:\Dev\GameEngine\x64\Debug\GameEnginePrototype.exe
+﻿D:\Dev\RenderingAPI\GameEnginePrototype.vcxproj : error MSB4025: Nie można załadować pliku projektu. Nie można odnaleźć pliku 'D:\Dev\RenderingAPI\GameEnginePrototype.vcxproj'.

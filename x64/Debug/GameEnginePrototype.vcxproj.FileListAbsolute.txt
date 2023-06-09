@@ -1,2 +1,3 @@
 D:\OneDrive\Dokumenty\.prywatne\GameEnginePrototype\x64\Debug\GameEnginePrototype.exe
 D:\Dev\GameEngine\x64\Debug\GameEnginePrototype.exe
+D:\Dev\RenderingAPI\x64\Debug\RenderingAPI.exe
