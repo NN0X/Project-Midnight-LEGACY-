@@ -184,7 +184,7 @@ int main()
     Camera camera({0.0f, 0.5f, 2.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, 45.0f, 0.01f, 100.0f);
     LightSource lightSource({1.0f, 0.5f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, 0.3f, 0.5f, 0.5f, 0.5f);
 
-    Object object({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
+    Object object({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
     object.AttachBuffers(vertices, indices);
     object.AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl");
     object.SetTexture(ImportImage(object, GL_LINEAR, "default.png"));

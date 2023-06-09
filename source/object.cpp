@@ -1,21 +1,18 @@
-﻿#include <fstream>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "object.h"
+﻿#include "object.h"
 
 Object::Object()
 {
     position = {0.0f, 0.0f, 0.0f};
+    scale = {1.0f, 1.0f, 1.0f};
     color = {1.0f, 1.0f, 1.0f, 1.0f};
     emission = {1.0f, 1.0f, 1.0f};
     matrix = glm::mat4(1.0f);
 }
 
-Object::Object(fVector3 pPosition, fRGBA pColor, fRGB pEmission)
+Object::Object(fVector3 pPosition, fVector3 pScale, fRGBA pColor, fRGB pEmission)
 {
     position = pPosition;
+    scale = pScale;
     color = pColor;
     emission = pEmission;
     matrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, position.z));
@@ -103,6 +100,11 @@ void Object::SetPosition(fVector3 pPosition)
     matrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, position.z));
 }
 
+void Object::SetScale(fVector3 pScale)
+{
+    scale = pScale;
+}
+
 void Object::SetColor(fRGBA pColor)
 {
     color = pColor;
@@ -119,6 +121,7 @@ void Object::SetTexture(GLuint pTexture)
 }
 
 fVector3 Object::GetPosition() { return position; }
+fVector3 Object::GetScale() { return scale; }
 fRGBA Object::GetColor() { return color; }
 fRGB Object::GetEmission() { return emission; }
 glm::mat4 Object::GetMatrix() { return matrix; }

@@ -11,6 +11,8 @@ private:
     fVector3 orientation;
     fVector3 up;
     fVector2 rotation;
+    glm::mat4 view;
+    glm::mat4 projection;
     glm::mat4 matrix;
     float FOV;
     float nearClipping;
@@ -19,6 +21,8 @@ private:
 public:
     Camera();
     Camera(fVector3, fVector3, fVector3, fVector2, float, float, float);
+
+    bool IsVisible(fVector3);
 
     void SetPosition(fVector3);
     void SetOrientation(fVector3);

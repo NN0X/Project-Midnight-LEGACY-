@@ -10,10 +10,12 @@ out vec3 currentPos;
 
 uniform mat4 camMatrix;
 uniform mat4 modelMatrix;
+uniform vec3 objScale;
 
 void main()
 {   
     currentPos = vec3(modelMatrix*vec4(aPos, 1.0f));
+    currentPos = currentPos*objScale;
     gl_Position = camMatrix*vec4(currentPos, 1.0f);
     texCoord = aTex;
     normal = aNormal;

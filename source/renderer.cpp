@@ -20,13 +20,7 @@ void Renderer::DrawObjects()
 {
     for (Object object : objects)
     {
-        // TEMP
-        fVector3 pointA = object.GetPosition();
-        fVector3 pointB = camera.GetPosition();
-        float distance = sqrt(pow((pointB.x - pointA.x), 2) + pow((pointB.y - pointA.y), 2) + pow((pointB.z - pointA.z), 2));
-        //
-
-        if (distance < camera.GetFarClipping())
+        if (camera.IsVisible(object.GetPosition()))
         {
             GLuint shaderProgram = object.GetShader();
 
@@ -34,6 +28,7 @@ void Renderer::DrawObjects()
             glBindTexture(GL_TEXTURE_2D, object.GetTexture());
             glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "camMatrix"), 1, GL_FALSE, glm::value_ptr(camera.GetMatrix()));
             glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(object.GetMatrix()));
+            glUniform3f(glGetUniformLocation(shaderProgram, "objScale"), object.GetScale().x, object.GetScale().y, object.GetScale().z);
             glUniform3f(glGetUniformLocation(shaderProgram, "cameraPos"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
             glUniform4f(glGetUniformLocation(shaderProgram, "objColor"), object.GetColor().r, object.GetColor().g, object.GetColor().b, object.GetColor().a);
             glUniform3f(glGetUniformLocation(shaderProgram, "objEmission"), object.GetEmission().r, object.GetEmission().g, object.GetEmission().b);

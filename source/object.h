@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <fstream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -9,6 +10,7 @@ class Object
 {
 private:
     fVector3 position;
+    fVector3 scale;
     fRGBA color;
     fRGB emission;
     glm::mat4 matrix;
@@ -19,7 +21,7 @@ private:
 
 public:
     Object();
-    Object(fVector3, fRGBA, fRGB);
+    Object(fVector3, fVector3, fRGBA, fRGB);
 
     void AttachBuffers(std::vector<GLfloat>, std::vector<GLuint>);
     void DetachBuffers();
@@ -27,11 +29,13 @@ public:
     void DetachShader();
 
     void SetPosition(fVector3);
+    void SetScale(fVector3);
     void SetColor(fRGBA);
     void SetEmission(fRGB);
     void SetTexture(GLuint);
 
     fVector3 GetPosition();
+    fVector3 GetScale();
     fRGBA GetColor();
     fRGB GetEmission();
     glm::mat4 GetMatrix();

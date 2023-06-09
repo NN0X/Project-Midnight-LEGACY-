@@ -6,6 +6,8 @@ Camera::Camera()
     orientation = {0.0f, 0.0f, -1.0f};
     up = {0.0f, 1.0f, 0.0f};
     rotation = {0.0f, 0.0f};
+    view = glm::mat4(1.0f);
+    projection = glm::mat4(1.0f);
     matrix = glm::mat4(1.0f);
     FOV = 45.0f;
     nearClipping = 0.01f;
@@ -18,10 +20,20 @@ Camera::Camera(fVector3 pPosition, fVector3 pOrientation, fVector3 pUp, fVector2
     orientation = pOrientation;
     up = pUp;
     rotation = pRotation;
+    view = glm::mat4(1.0f);
+    projection = glm::mat4(1.0f);
     matrix = glm::mat4(1.0f);
     FOV = pFOV;
     nearClipping = pNearClipping;
     farClipping = pFarClipping;
+}
+
+bool Camera::IsVisible(fVector3 pPosition)
+{
+    float distance = sqrt(pow((position.x - pPosition.x), 2) + pow((position.y - pPosition.y), 2) + pow((position.z - pPosition.z), 2));
+
+    if (distance > farClipping)
+        return false;
 }
 
 void Camera::SetPosition(fVector3 pPosition)
