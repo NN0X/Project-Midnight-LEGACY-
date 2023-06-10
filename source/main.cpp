@@ -32,8 +32,8 @@ GLuint ImportImage(Object object, int textureFiltering, std::string path)
     stbi_image_free(bytes);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    GLuint textureUniform = glGetUniformLocation(object.GetShader(), "tex");
-    glUseProgram(object.GetShader());
+    GLuint textureUniform = glGetUniformLocation(object.GetShader().GetProgram(), "tex");
+    glUseProgram(object.GetShader().GetProgram());
     glUniform1i(textureUniform, 0);
 
     return texture;

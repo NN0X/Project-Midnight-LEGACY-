@@ -56,42 +56,15 @@ void Object::DetachBuffers()
 
 void Object::AttachShader(std::string pPathVertex, std::string pPathFragment)
 {
-    std::ifstream vertexShaderFile(pPathVertex);
-    std::ifstream fragmentShaderFile(pPathFragment);
-    std::string vertexShaderData = "";
-    std::string fragmentShaderData = "";
-    std::string line;
+    shader.LoadShader(pPathVertex);
+    shader.LoadShader(pPathFragment);
 
-    while (getline(vertexShaderFile, line))
-        vertexShaderData += line + "\n";
-
-    while (getline(fragmentShaderFile, line))
-        fragmentShaderData += line + "\n";
-
-    const char *vertexShaderSource = vertexShaderData.data();
-    const char *fragmentShaderSource = fragmentShaderData.data();
-
-    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-
-    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-
-    glLinkProgram(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    shader.GenProgram();
 }
 
 void Object::DetachShader()
 {
-    glDeleteProgram(shaderProgram);
+    glDeleteProgram(shader.GetProgram());
 }
 
 void Object::SetPosition(fVector3 pPosition)
@@ -125,7 +98,7 @@ fVector3 Object::GetScale() { return scale; }
 fRGBA Object::GetColor() { return color; }
 fRGB Object::GetEmission() { return emission; }
 glm::mat4 Object::GetMatrix() { return matrix; }
-GLuint Object::GetShader() { return shaderProgram; }
+Shader Object::GetShader() { return shader; }
 GLuint Object::GetVAO() { return VAO; }
 GLuint Object::GetVBO() { return VBO; }
 GLuint Object::GetEBO() { return EBO; }

@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "structs.h"
+#include "shader.h"
 
 class Object
 {
@@ -14,7 +15,7 @@ private:
     fRGBA color;
     fRGB emission;
     glm::mat4 matrix;
-    GLuint shaderProgram;
+    Shader shader;
     GLuint VAO, VBO, EBO;
     GLuint texture;
     int sizeOfVertices, sizeOfIndices;
@@ -39,7 +40,7 @@ public:
     fRGBA GetColor();
     fRGB GetEmission();
     glm::mat4 GetMatrix();
-    GLuint GetShader();
+    Shader GetShader();
     GLuint GetVAO();
     GLuint GetVBO();
     GLuint GetEBO();

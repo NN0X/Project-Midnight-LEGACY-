@@ -22,7 +22,7 @@ void Renderer::DrawObjects()
     {
         if (camera.IsVisible(object.GetPosition()))
         {
-            GLuint shaderProgram = object.GetShader();
+            GLuint shaderProgram = object.GetShader().GetProgram();
 
             glUseProgram(shaderProgram);
             glBindTexture(GL_TEXTURE_2D, object.GetTexture());
