@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "structs.h"
 #include "shader.h"
+#include "buffer.h"
 
 class Object
 {
@@ -16,9 +17,9 @@ private:
     fRGB emission;
     glm::mat4 matrix;
     GLuint shaderProgram;
-    GLuint VAO, VBO, EBO;
+    GLuint VAO;
     GLuint texture;
-    int sizeOfVertices, sizeOfIndices;
+    int sizeOfIndices;
 
 public:
     Object();
@@ -35,6 +36,7 @@ public:
     void SetEmission(fRGB);
     void SetShader(GLuint);
     void SetTexture(GLuint);
+    void SetSizeOfIndices(int);
 
     fVector3 GetPosition();
     fVector3 GetScale();
@@ -43,9 +45,6 @@ public:
     glm::mat4 GetMatrix();
     GLuint GetShader();
     GLuint GetVAO();
-    GLuint GetVBO();
-    GLuint GetEBO();
     GLuint GetTexture();
-    int GetSizeOfVertices();
     int GetSizeOfIndices();
 };

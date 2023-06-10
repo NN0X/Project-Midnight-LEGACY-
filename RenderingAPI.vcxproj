@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="dependencies\include\glad\glad.c" />
     <ClCompile Include="dependencies\include\stb\stb.cpp" />
+    <ClCompile Include="source\buffer.cpp" />
     <ClCompile Include="source\camera.cpp" />
     <ClCompile Include="source\lightSource.cpp" />
     <ClCompile Include="source\log.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="source\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\buffer.h" />
     <ClInclude Include="source\camera.h" />
     <ClInclude Include="source\lightSource.h" />
     <ClInclude Include="source\log.h" />

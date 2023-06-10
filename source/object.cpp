@@ -20,38 +20,14 @@ Object::Object(fVector3 pPosition, fVector3 pScale, fRGBA pColor, fRGB pEmission
 
 void Object::AttachBuffers(std::vector<GLfloat> pObjectVertices, std::vector<GLuint> pObjectIndices)
 {
-    sizeOfVertices = sizeof(pObjectVertices);
-    sizeOfIndices = sizeof(pObjectIndices);
+    sizeOfIndices = sizeof(pObjectVertices);
 
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeOfVertices * 4 * sizeof(float), &pObjectVertices[0], GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices * sizeof(int), &pObjectIndices[0], GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(5 * sizeof(float)));
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
-
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    VAO = Buffer::CreateVAO(Buffer::CreateVBO(pObjectVertices), Buffer::CreateEBO(pObjectIndices));
 }
 
 void Object::DetachBuffers()
 {
     glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
 }
 
 void Object::AttachShader(std::string pPathVertex, std::string pPathFragment)
@@ -98,15 +74,20 @@ void Object::SetTexture(GLuint pTexture)
     texture = pTexture;
 }
 
-fVector3 Object::GetPosition() { return position; }
+void Object::SetSizeOfIndices(int pSizeOfIndices)
+{
+    sizeOfIndices = pSizeOfIndices;
+}
+
+fVector3 Object::GetPosition()
+{
+    return position;
+}
 fVector3 Object::GetScale() { return scale; }
 fRGBA Object::GetColor() { return color; }
 fRGB Object::GetEmission() { return emission; }
 glm::mat4 Object::GetMatrix() { return matrix; }
 GLuint Object::GetShader() { return shaderProgram; }
 GLuint Object::GetVAO() { return VAO; }
-GLuint Object::GetVBO() { return VBO; }
-GLuint Object::GetEBO() { return EBO; }
 GLuint Object::GetTexture() { return texture; }
-int Object::GetSizeOfVertices() { return sizeOfVertices; }
 int Object::GetSizeOfIndices() { return sizeOfIndices; }
