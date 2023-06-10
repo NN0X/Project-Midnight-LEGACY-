@@ -56,15 +56,15 @@ void Object::DetachBuffers()
 
 void Object::AttachShader(std::string pPathVertex, std::string pPathFragment)
 {
-    shader.LoadShader(pPathVertex);
-    shader.LoadShader(pPathFragment);
+    GLuint vertexShader = Shader::LoadVertex(pPathVertex);
+    GLuint fragmentShader = Shader::LoadFragment(pPathFragment);
 
-    shader.GenProgram();
+    shaderProgram = Shader::BuildProgram(vertexShader, fragmentShader);
 }
 
 void Object::DetachShader()
 {
-    glDeleteProgram(shader.GetProgram());
+    glDeleteProgram(shaderProgram);
 }
 
 void Object::SetPosition(fVector3 pPosition)
@@ -88,6 +88,11 @@ void Object::SetEmission(fRGB pEmission)
     emission = pEmission;
 }
 
+void Object::SetShader(GLuint pShaderProgram)
+{
+    shaderProgram = pShaderProgram;
+}
+
 void Object::SetTexture(GLuint pTexture)
 {
     texture = pTexture;
@@ -98,7 +103,7 @@ fVector3 Object::GetScale() { return scale; }
 fRGBA Object::GetColor() { return color; }
 fRGB Object::GetEmission() { return emission; }
 glm::mat4 Object::GetMatrix() { return matrix; }
-Shader Object::GetShader() { return shader; }
+GLuint Object::GetShader() { return shaderProgram; }
 GLuint Object::GetVAO() { return VAO; }
 GLuint Object::GetVBO() { return VBO; }
 GLuint Object::GetEBO() { return EBO; }

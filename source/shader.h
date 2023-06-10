@@ -3,18 +3,10 @@
 #include <fstream>
 #include "structs.h"
 
-class Shader
+namespace Shader
 {
-private:
-    GLuint program;
-    GLuint vertex;
-    GLuint fragment;
+    GLuint LoadVertex(std::string);
+    GLuint LoadFragment(std::string);
 
-public:
-    void LoadShader(std::string);
-    void GenProgram();
-
-    void SetProgram(GLuint);
-
-    GLuint GetProgram();
+    GLuint BuildProgram(GLuint, GLuint);
 };

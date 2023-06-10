@@ -15,7 +15,7 @@ private:
     fRGBA color;
     fRGB emission;
     glm::mat4 matrix;
-    Shader shader;
+    GLuint shaderProgram;
     GLuint VAO, VBO, EBO;
     GLuint texture;
     int sizeOfVertices, sizeOfIndices;
@@ -33,6 +33,7 @@ public:
     void SetScale(fVector3);
     void SetColor(fRGBA);
     void SetEmission(fRGB);
+    void SetShader(GLuint);
     void SetTexture(GLuint);
 
     fVector3 GetPosition();
@@ -40,7 +41,7 @@ public:
     fRGBA GetColor();
     fRGB GetEmission();
     glm::mat4 GetMatrix();
-    Shader GetShader();
+    GLuint GetShader();
     GLuint GetVAO();
     GLuint GetVBO();
     GLuint GetEBO();
