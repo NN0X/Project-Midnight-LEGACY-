@@ -42,7 +42,7 @@ vec4 PointLight()
     float specularAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), specularStrength);
     float specular = specularAmount * specularLight;
 
-    return texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * vec4(lightColor, 1.0f) * (diffuse * lightIntensity * lightStrength + specular * lightIntensity * lightStrength + lightAmbient);
+    return vec4(lightColor * (diffuse * lightIntensity * lightStrength + specular * lightIntensity * lightStrength + lightAmbient), 1.0f);
 }
 
 vec4 DirectionalLight()
@@ -56,7 +56,7 @@ vec4 DirectionalLight()
     float specularAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), specularStrength);
     float specular = specularAmount * specularLight;
 
-    return texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * vec4(lightColor, 1.0f) * (diffuse * lightStrength + specular * lightStrength + lightAmbient);
+    return vec4(lightColor * (diffuse * lightStrength + specular * lightStrength + lightAmbient), 1.0f);
 }
 
 vec4 SpotLight()
@@ -79,17 +79,17 @@ vec4 SpotLight()
     float angle = dot(lightDirection, -lightDirectionRelative);
     float spotIntensity = clamp((angle - lightOuterCone) / (lightInnerCone - lightOuterCone), 0.0f, 1.0f);
 
-    return texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * vec4(lightColor, 1.0f) * (diffuse * lightIntensity * lightStrength * spotIntensity + specular * lightIntensity * lightStrength * spotIntensity + lightAmbient);
+    return vec4(lightColor * (diffuse * lightIntensity * lightStrength * spotIntensity + specular * lightIntensity * lightStrength * spotIntensity + lightAmbient), 1.0f);
 }
 
 void main()
 {   
     if (lightType == 0)
-        FragColor = PointLight();
+        FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * PointLight();
         
     if (lightType == 1)
-        FragColor = DirectionalLight();
+        FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * DirectionalLight();
         
     if (lightType == 2)
-        FragColor = SpotLight();
+        FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * SpotLight();
 }
