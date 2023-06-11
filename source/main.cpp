@@ -146,54 +146,27 @@ int main()
     std::vector<GLfloat> vertices =
         {
             //   COORDINATES //  TexCoord  //  NORMALS       //
-            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,  // Bottom side
-            -0.5f, 0.0f, -0.5f, 0.0f, 5.0f, 0.0f, -1.0f, 0.0f, // Bottom side
-            0.5f, 0.0f, -0.5f, 5.0f, 5.0f, 0.0f, -1.0f, 0.0f,  // Bottom side
-            0.5f, 0.0f, 0.5f, 5.0f, 0.0f, 0.0f, -1.0f, 0.0f,   // Bottom side
-
-            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, -0.8f, 0.5f, 0.0f,  // Left Side
-            -0.5f, 0.0f, -0.5f, 5.0f, 0.0f, -0.8f, 0.5f, 0.0f, // Left Side
-            0.0f, 0.8f, 0.0f, 2.5f, 5.0f, -0.8f, 0.5f, 0.0f,   // Left Side
-
-            -0.5f, 0.0f, -0.5f, 5.0f, 0.0f, 0.0f, 0.5f, -0.8f, // Non-facing side
-            0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f, -0.8f,  // Non-facing side
-            0.0f, 0.8f, 0.0f, 2.5f, 5.0f, 0.0f, 0.5f, -0.8f,   // Non-facing side
-
-            0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.8f, 0.5f, 0.0f, // Right side
-            0.5f, 0.0f, 0.5f, 5.0f, 0.0f, 0.8f, 0.5f, 0.0f,  // Right side
-            0.0f, 0.8f, 0.0f, 2.5f, 5.0f, 0.8f, 0.5f, 0.0f,  // Right side
-
-            0.5f, 0.0f, 0.5f, 5.0f, 0.0f, 0.0f, 0.5f, 0.8f,  // Facing side
-            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.8f, // Facing side
-            0.0f, 0.8f, 0.0f, 2.5f, 5.0f, 0.0f, 0.5f, 0.8f   // Facing side
+            -0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, //
+            -0.5f, 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  //
+            0.5f, 0.0f, 0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //
+            0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //
         };
 
     std::vector<GLuint> indices =
         {
-            0, 1, 2,    // Bottom side
-            0, 2, 3,    // Bottom side
-            4, 6, 5,    // Left side
-            7, 9, 8,    // Non-facing side
-            10, 12, 11, // Right side
-            13, 15, 14  // Facing side
+            0, 3, 1, 1, 2, 3 //
         };
 
     Window window({1000, 1000}, "Renderer", 4, false, false);
     window.Init({4, 6});
     Renderer renderer({0, 0}, {1000, 1000}, true);
     Camera camera({0.0f, 0.5f, 2.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, 45.0f, 0.01f, 100.0f);
-    LightSource lightSource({1.0f, 0.5f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, 0.3f, 0.5f, 0.5f, 0.5f);
+    LightSource lightSource({0.0f, 1.0f, 0.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, 0.3f, 0.95f, 0.1f, 0.5f);
 
-    Object object({0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
+    Object object({0.0f, 0.0f, 0.0f}, {10.0f, 10.0f, 10.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
     object.AttachBuffers(vertices, indices);
     object.AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl");
     object.SetTexture(ImportImage(object, GL_LINEAR, "default.png"));
-    renderer.AttachObject(object);
-
-    object.SetPosition({-1.0f, 0.0f, 0.0f});
-    renderer.AttachObject(object);
-
-    object.SetPosition({1.0f, 1.0f, 1.0f});
     renderer.AttachObject(object);
 
     renderer.SetCamera(camera);

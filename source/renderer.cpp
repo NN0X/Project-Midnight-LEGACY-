@@ -34,10 +34,14 @@ void Renderer::DrawObjects()
             glUniform3f(glGetUniformLocation(shaderProgram, "objEmission"), object.GetEmission().r, object.GetEmission().g, object.GetEmission().b);
             glUniform4f(glGetUniformLocation(shaderProgram, "lightColor"), lightSource.GetColor().r, lightSource.GetColor().g, lightSource.GetColor().b, lightSource.GetColor().a);
             glUniform3f(glGetUniformLocation(shaderProgram, "lightPos"), lightSource.GetPosition().x, lightSource.GetPosition().y, lightSource.GetPosition().z);
+            glUniform3f(glGetUniformLocation(shaderProgram, "lightDirection"), lightSource.GetDirection().x, lightSource.GetDirection().y, lightSource.GetDirection().z);
             glUniform1f(glGetUniformLocation(shaderProgram, "ambient"), lightSource.GetParams(0));
             glUniform1f(glGetUniformLocation(shaderProgram, "specularStrenght"), lightSource.GetParams(1));
             glUniform1f(glGetUniformLocation(shaderProgram, "lightIntensityFalloff"), lightSource.GetParams(2));
             glUniform1f(glGetUniformLocation(shaderProgram, "lightEffectiveRangeInverse"), lightSource.GetParams(3));
+            glUniform1f(glGetUniformLocation(shaderProgram, "lightInnerCone"), lightSource.GetParams(4));
+            glUniform1f(glGetUniformLocation(shaderProgram, "lightOuterCone"), lightSource.GetParams(5));
+            glUniform1i(glGetUniformLocation(shaderProgram, "lightType"), lightSource.GetType());
             glBindVertexArray(object.GetVAO());
             glDrawElements(GL_TRIANGLES, object.GetSizeOfIndices(), GL_UNSIGNED_INT, 0);
         }
