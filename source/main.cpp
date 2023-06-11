@@ -149,7 +149,7 @@ int main()
             -0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, //
             -0.5f, 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  //
             0.5f, 0.0f, 0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //
-            0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //
+            0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f   //
         };
 
     std::vector<GLuint> indices =
@@ -167,6 +167,46 @@ int main()
     object.AttachBuffers(vertices, indices);
     object.AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl");
     object.SetTexture(ImportImage(object, GL_LINEAR, "default.png"));
+    renderer.AttachObject(object);
+
+    vertices =
+        {
+            //   COORDINATES   /  TexCoord /     NORMALS       //
+            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,  // Bottom side
+            -0.5f, 0.0f, -0.5f, 0.0f, 5.0f, 0.0f, -1.0f, 0.0f, // Bottom side
+            0.5f, 0.0f, -0.5f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,  // Bottom side
+            0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,   // Bottom side
+
+            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, -0.8f, 0.5f, 0.0f,  // Left Side
+            -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, -0.8f, 0.5f, 0.0f, // Left Side
+            0.0f, 0.8f, 0.0f, 0.5f, 1.0f, -0.8f, 0.5f, 0.0f,   // Left Side
+
+            -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, -0.8f, // Non-facing side
+            0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f, -0.8f,  // Non-facing side
+            0.0f, 0.8f, 0.0f, 0.5f, 1.0f, 0.0f, 0.5f, -0.8f,   // Non-facing side
+
+            0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.8f, 0.5f, 0.0f, // Right side
+            0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.8f, 0.5f, 0.0f,  // Right side
+            0.0f, 0.8f, 0.0f, 0.5f, 1.0f, 0.8f, 0.5f, 0.0f,  // Right side
+
+            0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.8f,  // Facing side
+            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.8f, // Facing side
+            0.0f, 0.8f, 0.0f, 0.5f, 1.0f, 0.0f, 0.5f, 0.8f   // Facing side
+        };
+
+    indices =
+        {
+            0, 1, 2,    // Bottom side
+            0, 2, 3,    // Bottom side
+            4, 6, 5,    // Left side
+            7, 9, 8,    // Non-facing side
+            10, 12, 11, // Right side
+            13, 15, 14  // Facing side
+        };
+
+    object.SetPosition({1.0f, 0.0f, 0.0f});
+    object.SetScale({1.0f, 1.0f, 1.0f});
+    object.AttachBuffers(vertices, indices);
     renderer.AttachObject(object);
 
     renderer.SetCamera(camera);
