@@ -4,9 +4,10 @@ LightSource::LightSource()
 {
     position = {0.0f, 0.0f, 0.0f};
     direction = {0.0f, -1.0f, 0.0f};
-    color = {1.0f, 1.0f, 1.0f, 1.0f};
+    color = {1.0f, 1.0f, 1.0f};
+    strength = 1.0f;
     ambient = 0.3f;
-    specularStrenght = 0.5f;
+    specularStrength = 0.5f;
     intensityFalloff = 0.5f;
     inverseEffectiveRange = 0.5f;
     innerCone = 0.95f;
@@ -14,13 +15,14 @@ LightSource::LightSource()
     type = 0;
 }
 
-LightSource::LightSource(fVector3 pPosition, fRGBA pColor, float pAmbient, float pSpecularStrenght, float pIntensityFalloff, float pInverseEffectiveRange)
+LightSource::LightSource(fVector3 pPosition, fRGB pColor, float pStrength, float pAmbient, float pSpecularStrength, float pIntensityFalloff, float pInverseEffectiveRange)
 {
     position = pPosition;
     direction = {0.0f, 0.0f, 0.0f};
     color = pColor;
+    strength = pStrength;
     ambient = pAmbient;
-    specularStrenght = pSpecularStrenght;
+    specularStrength = pSpecularStrength;
     intensityFalloff = pIntensityFalloff;
     inverseEffectiveRange = pInverseEffectiveRange;
     innerCone = 0.0f;
@@ -28,13 +30,14 @@ LightSource::LightSource(fVector3 pPosition, fRGBA pColor, float pAmbient, float
     type = 0;
 }
 
-LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGBA pColor, float pAmbient, float pSpecularStrenght)
+LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGB pColor, float pStrength, float pAmbient, float pSpecularStrength)
 {
     position = pPosition;
     direction = pDirection;
     color = pColor;
+    strength = pStrength;
     ambient = pAmbient;
-    specularStrenght = pSpecularStrenght;
+    specularStrength = pSpecularStrength;
     intensityFalloff = 0.0f;
     inverseEffectiveRange = 0.0f;
     innerCone = 0.0f;
@@ -42,13 +45,14 @@ LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGBA pColor, 
     type = 1;
 }
 
-LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGBA pColor, float pAmbient, float pSpecularStrenght, float pIntensityFalloff, float pInverseEffectiveRange, float pInnerCone, float pOuterCone)
+LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGB pColor, float pStrength, float pAmbient, float pSpecularStrength, float pIntensityFalloff, float pInverseEffectiveRange, float pInnerCone, float pOuterCone)
 {
     position = pPosition;
     direction = pDirection;
     color = pColor;
+    strength = pStrength;
     ambient = pAmbient;
-    specularStrenght = pSpecularStrenght;
+    specularStrength = pSpecularStrength;
     intensityFalloff = pIntensityFalloff;
     inverseEffectiveRange = pInverseEffectiveRange;
     innerCone = pInnerCone;
@@ -66,15 +70,16 @@ void LightSource::SetDirection(fVector3 pDirection)
     direction = pDirection;
 }
 
-void LightSource::SetColor(fRGBA pColor)
+void LightSource::SetColor(fRGB pColor)
 {
     color = pColor;
 }
 
-void LightSource::SetParams(float pAmbient, float pSpecularStrenght, float pIntensityFalloff, float pInverseEffectiveRange, float pInnerCone, float pOuterCone)
+void LightSource::SetParams(float pStrength, float pAmbient, float pSpecularStrength, float pIntensityFalloff, float pInverseEffectiveRange, float pInnerCone, float pOuterCone)
 {
+    strength = pStrength;
     ambient = pAmbient;
-    specularStrenght = pSpecularStrenght;
+    specularStrength = pSpecularStrength;
     intensityFalloff = pIntensityFalloff;
     inverseEffectiveRange = pInverseEffectiveRange;
     innerCone = pInnerCone;
@@ -83,22 +88,24 @@ void LightSource::SetParams(float pAmbient, float pSpecularStrenght, float pInte
 
 fVector3 LightSource::GetPosition() { return position; }
 fVector3 LightSource::GetDirection() { return direction; }
-fRGBA LightSource::GetColor() { return color; }
+fRGB LightSource::GetColor() { return color; }
 float LightSource::GetParams(int pIndex)
 {
     switch (pIndex)
     {
     case 0:
-        return ambient;
+        return strength;
     case 1:
-        return specularStrenght;
+        return ambient;
     case 2:
-        return intensityFalloff;
+        return specularStrength;
     case 3:
-        return inverseEffectiveRange;
+        return intensityFalloff;
     case 4:
-        return innerCone;
+        return inverseEffectiveRange;
     case 5:
+        return innerCone;
+    case 6:
         return outerCone;
     default:
         return NULL;

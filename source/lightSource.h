@@ -7,9 +7,10 @@ class LightSource
 private:
     fVector3 position;
     fVector3 direction;
-    fRGBA color;
+    fRGB color;
+    float strength;
     float ambient;
-    float specularStrenght;
+    float specularStrength;
     float intensityFalloff;
     float inverseEffectiveRange;
     float innerCone;
@@ -18,19 +19,19 @@ private:
 
 public:
     LightSource();
-    LightSource(fVector3, fRGBA, float, float, float, float);
-    LightSource(fVector3, fVector3, fRGBA, float, float);
-    LightSource(fVector3, fVector3, fRGBA, float, float, float, float, float, float);
+    LightSource(fVector3, fRGB, float, float, float, float, float);
+    LightSource(fVector3, fVector3, fRGB, float, float, float);
+    LightSource(fVector3, fVector3, fRGB, float, float, float, float, float, float, float);
 
     void SetPosition(fVector3);
     void SetDirection(fVector3);
-    void SetColor(fRGBA);
-    void SetParams(float, float, float, float, float, float);
+    void SetColor(fRGB);
+    void SetParams(float, float, float, float, float, float, float);
     void SetType(int);
 
     fVector3 GetPosition();
     fVector3 GetDirection();
-    fRGBA GetColor();
+    fRGB GetColor();
     float GetParams(int);
     int GetType();
 };
