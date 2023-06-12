@@ -30,10 +30,10 @@ void Object::DetachBuffers()
     glDeleteVertexArrays(1, &VAO);
 }
 
-void Object::AttachShader(std::string pPathVertex, std::string pPathFragment)
+void Object::AttachShader(std::string pPathVertex, std::string pPathFragment, int pLightsNumber)
 {
     GLuint vertexShader = Shader::LoadVertex(pPathVertex);
-    GLuint fragmentShader = Shader::LoadFragment(pPathFragment);
+    GLuint fragmentShader = Shader::LoadFragment(pPathFragment, pLightsNumber);
 
     shaderProgram = Shader::BuildProgram(vertexShader, fragmentShader);
 }

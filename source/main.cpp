@@ -161,11 +161,11 @@ int main()
     window.Init({4, 6});
     Renderer renderer({0, 0}, {1000, 1000}, true);
     Camera camera({0.0f, 0.5f, 2.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, 45.0f, 0.01f, 100.0f);
-    LightSource lightSource({0.0f, 1.0f, 0.0f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, 0.5f, 0.3f, 0.95f);
+    LightSource lightSource({0.0f, 1.0f, 0.0f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, 1.0f, 0.3f, 0.95f, 0.5f, 0.5f, 0.95f, 0.9f);
 
     Object object({0.0f, 0.0f, 0.0f}, {10.0f, 10.0f, 10.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
     object.AttachBuffers(vertices, indices);
-    object.AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl");
+    object.AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl", 1); // MAX 92 LIGHTSOURCES
     object.SetTexture(ImportImage(object, GL_LINEAR, "default.png"));
     renderer.AttachObject(object);
 
@@ -210,7 +210,10 @@ int main()
     renderer.AttachObject(object);
 
     renderer.SetCamera(camera);
-    renderer.SetLightSource(lightSource);
+
+    lightSource.SetType(0);
+    renderer.AttachLightSource(lightSource);
+
     window.AttachRenderer(renderer);
 
     int frames = 0;

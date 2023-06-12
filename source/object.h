@@ -27,7 +27,7 @@ public:
 
     void AttachBuffers(std::vector<GLfloat>, std::vector<GLuint>);
     void DetachBuffers();
-    void AttachShader(std::string, std::string);
+    void AttachShader(std::string, std::string, int);
     void DetachShader();
 
     void SetPosition(fVector3);

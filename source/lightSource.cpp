@@ -86,6 +86,11 @@ void LightSource::SetParams(float pStrength, float pAmbient, float pSpecularStre
     outerCone = pOuterCone;
 }
 
+void LightSource::SetType(int pType)
+{
+    type = pType;
+}
+
 fVector3 LightSource::GetPosition() { return position; }
 fVector3 LightSource::GetDirection() { return direction; }
 fRGB LightSource::GetColor() { return color; }

@@ -1,4 +1,5 @@
 #version 460 core
+#define L_NUM
 
 out vec4 FragColor;
 
@@ -10,22 +11,22 @@ uniform sampler2D tex;
 uniform vec4 objColor;
 uniform vec3 objEmission;
 
-uniform vec3 lightColor;
-uniform vec3 lightPos;
-uniform vec3 lightDirection;
-uniform float lightStrength;
-uniform float lightAmbient;
-uniform float specularStrength;
-uniform float lightIntensityFalloff;
-uniform float lightEffectiveRangeInverse;
-uniform float lightInnerCone;
-uniform float lightOuterCone;
-uniform int lightType;
+uniform vec3 lightColors[L_NUM];
+uniform vec3 lightPoss[L_NUM];
+uniform vec3 lightDirections[L_NUM];
+uniform float lightStrengths[L_NUM];
+uniform float lightAmbients[L_NUM];
+uniform float specularStrengths[L_NUM];
+uniform float lightIntensityFalloffs[L_NUM];
+uniform float lightEffectiveRangeInverses[L_NUM];
+uniform float lightInnerCones[L_NUM];
+uniform float lightOuterCones[L_NUM];
+uniform int lightTypes[L_NUM];
 
 uniform vec3 cameraPos;
 
 
-vec4 PointLight()
+vec4 PointLight(vec3 lightColor, vec3 lightPos, float lightStrength, float lightAmbient, float specularStrength, float lightIntensityFalloff, float lightEffectiveRangeInverse)
 {
     vec3 lightVector = lightPos - currentPos;
     float lightDistance = length(lightVector);
@@ -45,7 +46,7 @@ vec4 PointLight()
     return vec4(lightColor * (diffuse * lightIntensity * lightStrength + specular * lightIntensity * lightStrength + lightAmbient), 1.0f);
 }
 
-vec4 DirectionalLight()
+vec4 DirectionalLight(vec3 lightColor, vec3 lightPos, vec3 lightDirection, float lightStrength, float lightAmbient, float specularStrength)
 {
     vec3 nNormal = normalize(normal); 
     float diffuse = max(dot(nNormal, -lightDirection), 0.0f);
@@ -59,7 +60,7 @@ vec4 DirectionalLight()
     return vec4(lightColor * (diffuse * lightStrength + specular * lightStrength + lightAmbient), 1.0f);
 }
 
-vec4 SpotLight()
+vec4 SpotLight(vec3 lightColor, vec3 lightPos, vec3 lightDirection, float lightStrength, float lightAmbient, float specularStrength, float lightIntensityFalloff, float lightEffectiveRangeInverse, float lightInnerCone, float lightOuterCone)
 {
     vec3 lightVector = lightPos - currentPos;
     float lightDistance = length(lightVector);
@@ -84,12 +85,19 @@ vec4 SpotLight()
 
 void main()
 {   
-    if (lightType == 0)
-        FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * PointLight();
-        
-    if (lightType == 1)
-        FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * DirectionalLight();
-        
-    if (lightType == 2)
-        FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * SpotLight();
+    vec4 light;
+
+    for (int index = 0; index < L_NUM; index++)
+    {
+        if (lightTypes[index] == 0)
+            light += PointLight(lightColors[index], lightPoss[index], lightStrengths[index], lightAmbients[index], specularStrengths[index], lightIntensityFalloffs[index], lightEffectiveRangeInverses[index]);
+            
+        if (lightTypes[index] == 1)
+            light += DirectionalLight(lightColors[index], lightPoss[index], lightDirections[index], lightStrengths[index], lightAmbients[index], specularStrengths[index]);
+            
+        if (lightTypes[index] == 2)
+            light += SpotLight(lightColors[index], lightPoss[index], lightDirections[index], lightStrengths[index], lightAmbients[index], specularStrengths[index], lightIntensityFalloffs[index], lightEffectiveRangeInverses[index], lightInnerCones[index], lightOuterCones[index]);
+    }
+
+    FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * light;
 }

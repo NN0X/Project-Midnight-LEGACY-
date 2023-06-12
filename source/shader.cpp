@@ -20,7 +20,7 @@ GLuint Shader::LoadVertex(std::string pPath)
     return vertexShader;
 }
 
-GLuint Shader::LoadFragment(std::string pPath)
+GLuint Shader::LoadFragment(std::string pPath, int pLightsNumber)
 {
     GLuint fragmentShader;
 
@@ -29,7 +29,12 @@ GLuint Shader::LoadFragment(std::string pPath)
     std::string line;
 
     while (getline(shaderFile, line))
-        shaderSource += line + "\n";
+    {
+        if (line == "#define L_NUM")
+            shaderSource += line + " " + std::to_string(pLightsNumber) + "\n";
+        else
+            shaderSource += line + "\n";
+    }
 
     const char *shaderData = shaderSource.data();
 
