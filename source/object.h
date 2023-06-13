@@ -6,7 +6,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "structs.h"
 #include "shader.h"
-#include "buffer.h"
 
 class Object
 {
@@ -18,7 +17,10 @@ private:
     glm::mat4 matrix;
     GLuint shaderProgram;
     GLuint VAO;
+    GLuint VBO;
+    GLuint EBO;
     GLuint texture;
+    int sizeOfVertices;
     int sizeOfIndices;
 
 public:
