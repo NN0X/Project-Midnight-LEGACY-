@@ -155,6 +155,7 @@
     <ClCompile Include="source\log.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\object.cpp" />
+    <ClCompile Include="source\postprocess.cpp" />
     <ClCompile Include="source\renderer.cpp" />
     <ClCompile Include="source\shader.cpp" />
     <ClCompile Include="source\window.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="source\lightSource.h" />
     <ClInclude Include="source\log.h" />
     <ClInclude Include="source\object.h" />
+    <ClInclude Include="source\postprocess.h" />
     <ClInclude Include="source\renderer.h" />
     <ClInclude Include="source\shader.h" />
     <ClInclude Include="source\structs.h" />

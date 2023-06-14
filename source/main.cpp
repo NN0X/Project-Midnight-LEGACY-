@@ -130,7 +130,7 @@ std::pair<Window, int> RendererLoop(Window window, int frames)
     renderer.SetCamera(camera);
     window.renderer = renderer;
 
-    renderer.DrawObjects();
+    renderer.Draw();
 
     glfwSwapBuffers(window.window);
 
@@ -162,6 +162,9 @@ int main()
     Renderer renderer({0, 0}, {1000, 1000}, true);
     Camera camera({0.0f, 0.5f, 2.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, 45.0f, 0.01f, 100.0f);
     LightSource lightSource({0.0f, 1.0f, 0.0f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, 1.0f, 0.3f, 0.95f, 0.5f, 0.5f, 0.95f, 0.9f);
+
+    Postprocess postprocess({1000, 1000});
+    postprocess.AttachShader("resources/shaders/framebufferVertex.glsl", "resources/shaders/framebufferFrag.glsl");
 
     Object object({0.0f, 0.0f, 0.0f}, {10.0f, 10.0f, 10.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
     object.AttachBuffers(vertices, indices);
@@ -213,6 +216,8 @@ int main()
 
     lightSource.SetType(0);
     renderer.AttachLightSource(lightSource);
+
+    renderer.AttachPostprocess(postprocess);
 
     window.AttachRenderer(renderer);
 

@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "lightSource.h"
 #include "object.h"
+#include "postprocess.h"
 
 class Renderer
 {
@@ -12,6 +13,7 @@ private:
     u16Vector2 begin;
     u16Vector2 end;
     Camera camera;
+    std::vector<Postprocess> postprocesses;
     std::vector<LightSource> lightSources;
     std::vector<Object> objects;
     bool MSAA;
@@ -20,7 +22,9 @@ public:
     Renderer();
     Renderer(u16Vector2, u16Vector2, bool);
 
-    void DrawObjects();
+    void Draw();
+    void AttachPostprocess(Postprocess);
+    void DetachPostprocess(int);
     void AttachLightSource(LightSource);
     void DetachLightSource(int);
     void AttachObject(Object);
@@ -35,6 +39,7 @@ public:
     u16Vector2 GetBegin();
     u16Vector2 GetEnd();
     Camera GetCamera();
+    std::vector<Postprocess> GetPostprocesses();
     std::vector<LightSource> GetLightSources();
     std::vector<Object> GetObjects();
     bool GetMSAA();
