@@ -18,8 +18,13 @@ Object::Object(fVector3 pPosition, fVector3 pScale, fRGBA pColor, fRGB pEmission
     matrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, position.z));
 }
 
-void Object::Draw(Camera pCamera, std::vector<LightSource> pLightSources)
+void Object::Draw(Camera pCamera, std::vector<LightSource> pLightSources, bool pMSAA)
 {
+    if (pMSAA == true)
+        glEnable(GL_MULTISAMPLE);
+    else
+        glDisable(GL_MULTISAMPLE);
+
     glUseProgram(shaderProgram);
     glBindTexture(GL_TEXTURE_2D, texture);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "camMatrix"), 1, GL_FALSE, glm::value_ptr(pCamera.GetMatrix()));

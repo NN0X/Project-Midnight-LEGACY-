@@ -18,11 +18,12 @@ Renderer::Renderer(u16Vector2 pBegin, u16Vector2 pEnd, bool pMSAA)
 
 void Renderer::Draw()
 {
+    glViewport(0, 0, size.x, size.y);
     for (Object object : objects)
     {
         if (camera.IsVisible(object.GetPosition()))
         {
-            object.Draw(camera, lightSources);
+            object.Draw(camera, lightSources, MSAA);
         }
     }
 }
@@ -34,7 +35,7 @@ void Renderer::DrawPostprocessed()
         postprocess.Use();
         for (Object object : objects)
         {
-            object.Draw(camera, lightSources);
+            object.Draw(camera, lightSources, false);
         }
         postprocess.Draw();
     }

@@ -138,14 +138,15 @@ void Postprocess::Use()
 
 void Postprocess::Draw()
 {
+    glDisable(GL_DEPTH_TEST);
+    glUseProgram(shaderProgram);
+    glBindVertexArray(VAO);
+    glUniform1i(glGetUniformLocation(shaderProgram, "screenTexture"), 0);
+
     if (MSAA == 0)
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
-        glDisable(GL_DEPTH_TEST);
         glBindTexture(GL_TEXTURE_2D, texture);
-        glUniform1i(glGetUniformLocation(shaderProgram, "screenTexture"), 0);
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
     else
@@ -154,11 +155,7 @@ void Postprocess::Draw()
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, FBO);
         glBlitFramebuffer(0, 0, size.x, size.y, 0, 0, size.x, size.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
-        glDisable(GL_DEPTH_TEST);
         glBindTexture(GL_TEXTURE_2D, texture);
-        glUniform1i(glGetUniformLocation(shaderProgram, "screenTexture"), 0);
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }
@@ -176,11 +173,22 @@ void Postprocess::DetachShader()
     glDeleteProgram(shaderProgram);
 }
 
+void Postprocess::SetSize(u16Vector2 pSize)
+{
+    size = pSize;
+}
+
 void Postprocess::SetShaderProgram(GLuint pShaderProgram)
 {
     shaderProgram = pShaderProgram;
 }
 
+void Postprocess::SetMSAA(uint8_t pMSAA)
+{
+    MSAA = pMSAA;
+}
+
+u16Vector2 Postprocess::GetSize() { return size; }
 GLuint Postprocess::GetShaderProgram() { return shaderProgram; }
 GLuint Postprocess::GetVAO() { return VAO; }
 GLuint Postprocess::GetFBO() { return FBO; }

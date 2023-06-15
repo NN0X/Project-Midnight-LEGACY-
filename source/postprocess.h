@@ -27,9 +27,11 @@ public:
     void AttachShader(std::string, std::string);
     void DetachShader();
 
+    void SetSize(u16Vector2);
     void SetShaderProgram(GLuint);
     void SetMSAA(uint8_t);
 
+    u16Vector2 GetSize();
     GLuint GetShaderProgram();
     GLuint GetVAO();
     GLuint GetFBO();

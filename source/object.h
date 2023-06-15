@@ -29,7 +29,7 @@ public:
     Object();
     Object(fVector3, fVector3, fRGBA, fRGB);
 
-    void Draw(Camera, std::vector<LightSource>);
+    void Draw(Camera, std::vector<LightSource>, bool);
     void AttachBuffers(std::vector<GLfloat>, std::vector<GLuint>);
     void DetachBuffers();
     void AttachShader(std::string, std::string, int);
