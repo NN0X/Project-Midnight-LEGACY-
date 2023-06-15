@@ -6,6 +6,7 @@
 class Postprocess
 {
 private:
+    int type; // 0 - base / simple effect 1 - shadow map
     u16Vector2 size;
     GLuint shaderProgram;
     GLuint VAO;
@@ -19,8 +20,8 @@ private:
     uint8_t MSAA;
 
 public:
-    Postprocess(u16Vector2);
-    Postprocess(u16Vector2, uint8_t);
+    Postprocess(u16Vector2, int);
+    Postprocess(u16Vector2, uint8_t, int);
 
     void Draw();
     void Use();

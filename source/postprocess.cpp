@@ -1,7 +1,8 @@
 ﻿#include "postprocess.h"
 
-Postprocess::Postprocess(u16Vector2 pSize)
+Postprocess::Postprocess(u16Vector2 pSize, int pType)
 {
+    type = pType;
     size = pSize;
     MSAA = 0;
 
@@ -51,8 +52,9 @@ Postprocess::Postprocess(u16Vector2 pSize)
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
-Postprocess::Postprocess(u16Vector2 pSize, uint8_t pMSAA)
+Postprocess::Postprocess(u16Vector2 pSize, uint8_t pMSAA, int pType)
 {
+    type = pType;
     size = pSize;
     MSAA = pMSAA;
 

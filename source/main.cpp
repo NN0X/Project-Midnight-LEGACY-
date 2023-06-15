@@ -163,8 +163,11 @@ int main()
     Camera camera({0.0f, 0.5f, 2.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, 45.0f, 0.01f, 100.0f);
     LightSource lightSource({0.0f, 1.0f, 0.0f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, 1.0f, 0.3f, 0.95f, 0.5f, 0.5f, 0.95f, 0.9f);
 
-    Postprocess postprocess(renderer.GetSize(), window.GetMSAA());
+    Postprocess postprocess(renderer.GetSize(), window.GetMSAA(), 0);
     postprocess.AttachShader("resources/shaders/framebufferVertex.glsl", "resources/shaders/framebufferFrag.glsl");
+
+    Postprocess postprocessShadows(renderer.GetSize(), 1);
+    postprocessShadows.AttachShader("resources/shaders/shadowMapVertex.glsl", "resources/shaders/shadowMapFrag.glsl");
 
     Object object({0.0f, 0.0f, 0.0f}, {10.0f, 10.0f, 10.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
     object.AttachBuffers(vertices, indices);
@@ -218,6 +221,7 @@ int main()
     renderer.AttachLightSource(lightSource);
 
     renderer.AttachPostprocess(postprocess);
+    renderer.AttachPostprocess(postprocessShadows);
 
     window.AttachRenderer(renderer);
 
