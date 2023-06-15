@@ -23,6 +23,7 @@ public:
     Renderer(u16Vector2, u16Vector2, bool);
 
     void Draw();
+    void DrawPostprocessed();
     void AttachPostprocess(Postprocess);
     void DetachPostprocess(int);
     void AttachLightSource(LightSource);

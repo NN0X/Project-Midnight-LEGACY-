@@ -18,57 +18,25 @@ Renderer::Renderer(u16Vector2 pBegin, u16Vector2 pEnd, bool pMSAA)
 
 void Renderer::Draw()
 {
+    for (Object object : objects)
+    {
+        if (camera.IsVisible(object.GetPosition()))
+        {
+            object.Draw(camera, lightSources);
+        }
+    }
+}
+
+void Renderer::DrawPostprocessed()
+{
     for (Postprocess postprocess : postprocesses)
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, postprocess.GetFBO());
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
-
+        postprocess.Use();
         for (Object object : objects)
         {
-            if (camera.IsVisible(object.GetPosition()))
-            {
-                GLuint shaderProgram = object.GetShader();
-
-                glUseProgram(shaderProgram);
-                glBindTexture(GL_TEXTURE_2D, object.GetTexture());
-                glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "camMatrix"), 1, GL_FALSE, glm::value_ptr(camera.GetMatrix()));
-                glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(object.GetMatrix()));
-                glUniform3f(glGetUniformLocation(shaderProgram, "objScale"), object.GetScale().x, object.GetScale().y, object.GetScale().z);
-                glUniform3f(glGetUniformLocation(shaderProgram, "cameraPos"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-                glUniform4f(glGetUniformLocation(shaderProgram, "objColor"), object.GetColor().r, object.GetColor().g, object.GetColor().b, object.GetColor().a);
-                glUniform3f(glGetUniformLocation(shaderProgram, "objEmission"), object.GetEmission().r, object.GetEmission().g, object.GetEmission().b);
-
-                int iIndex = 0;
-                for (LightSource lightSource : lightSources)
-                {
-                    std::string sIndex = "[" + std::to_string(iIndex) + "]";
-                    glUniform3f(glGetUniformLocation(shaderProgram, ("lightColors" + sIndex).data()), lightSource.GetColor().r, lightSource.GetColor().g, lightSource.GetColor().b);
-                    glUniform3f(glGetUniformLocation(shaderProgram, ("lightPoss" + sIndex).data()), lightSource.GetPosition().x, lightSource.GetPosition().y, lightSource.GetPosition().z);
-                    glUniform3f(glGetUniformLocation(shaderProgram, ("lightDirections" + sIndex).data()), lightSource.GetDirection().x, lightSource.GetDirection().y, lightSource.GetDirection().z);
-                    glUniform1f(glGetUniformLocation(shaderProgram, ("lightStrengths" + sIndex).data()), lightSource.GetParams(0));
-                    glUniform1f(glGetUniformLocation(shaderProgram, ("lightAmbients" + sIndex).data()), lightSource.GetParams(1));
-                    glUniform1f(glGetUniformLocation(shaderProgram, ("specularStrengths" + sIndex).data()), lightSource.GetParams(2));
-                    glUniform1f(glGetUniformLocation(shaderProgram, ("lightIntensityFalloffs" + sIndex).data()), lightSource.GetParams(3));
-                    glUniform1f(glGetUniformLocation(shaderProgram, ("lightEffectiveRangeInverses" + sIndex).data()), lightSource.GetParams(4));
-                    glUniform1f(glGetUniformLocation(shaderProgram, ("lightInnerCones" + sIndex).data()), lightSource.GetParams(5));
-                    glUniform1f(glGetUniformLocation(shaderProgram, ("lightOuterCones" + sIndex).data()), lightSource.GetParams(6));
-                    glUniform1i(glGetUniformLocation(shaderProgram, ("lightTypes" + sIndex).data()), lightSource.GetType());
-                    iIndex++;
-                }
-
-                glBindVertexArray(object.GetVAO());
-                glDrawElements(GL_TRIANGLES, object.GetSizeOfIndices(), GL_UNSIGNED_INT, 0);
-            }
+            object.Draw(camera, lightSources);
         }
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glUseProgram(postprocess.GetShaderProgram());
-        glBindVertexArray(postprocess.GetVAO());
-        glDisable(GL_DEPTH_TEST);
-        glBindTexture(GL_TEXTURE_2D, postprocess.GetTexture());
-        glUniform1i(glGetUniformLocation(postprocess.GetShaderProgram(), "screenTexture"), 0);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        postprocess.Draw();
     }
 }
 

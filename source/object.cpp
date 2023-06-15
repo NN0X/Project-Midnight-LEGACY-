@@ -18,6 +18,39 @@ Object::Object(fVector3 pPosition, fVector3 pScale, fRGBA pColor, fRGB pEmission
     matrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, position.z));
 }
 
+void Object::Draw(Camera pCamera, std::vector<LightSource> pLightSources)
+{
+    glUseProgram(shaderProgram);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "camMatrix"), 1, GL_FALSE, glm::value_ptr(pCamera.GetMatrix()));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+    glUniform3f(glGetUniformLocation(shaderProgram, "objScale"), scale.x, scale.y, scale.z);
+    glUniform3f(glGetUniformLocation(shaderProgram, "cameraPos"), pCamera.GetPosition().x, pCamera.GetPosition().y, pCamera.GetPosition().z);
+    glUniform4f(glGetUniformLocation(shaderProgram, "objColor"), color.r, color.g, color.b, color.a);
+    glUniform3f(glGetUniformLocation(shaderProgram, "objEmission"), emission.r, emission.g, emission.b);
+
+    int iIndex = 0;
+    for (LightSource lightSource : pLightSources)
+    {
+        std::string sIndex = "[" + std::to_string(iIndex) + "]";
+        glUniform3f(glGetUniformLocation(shaderProgram, ("lightColors" + sIndex).data()), lightSource.GetColor().r, lightSource.GetColor().g, lightSource.GetColor().b);
+        glUniform3f(glGetUniformLocation(shaderProgram, ("lightPoss" + sIndex).data()), lightSource.GetPosition().x, lightSource.GetPosition().y, lightSource.GetPosition().z);
+        glUniform3f(glGetUniformLocation(shaderProgram, ("lightDirections" + sIndex).data()), lightSource.GetDirection().x, lightSource.GetDirection().y, lightSource.GetDirection().z);
+        glUniform1f(glGetUniformLocation(shaderProgram, ("lightStrengths" + sIndex).data()), lightSource.GetParams(0));
+        glUniform1f(glGetUniformLocation(shaderProgram, ("lightAmbients" + sIndex).data()), lightSource.GetParams(1));
+        glUniform1f(glGetUniformLocation(shaderProgram, ("specularStrengths" + sIndex).data()), lightSource.GetParams(2));
+        glUniform1f(glGetUniformLocation(shaderProgram, ("lightIntensityFalloffs" + sIndex).data()), lightSource.GetParams(3));
+        glUniform1f(glGetUniformLocation(shaderProgram, ("lightEffectiveRangeInverses" + sIndex).data()), lightSource.GetParams(4));
+        glUniform1f(glGetUniformLocation(shaderProgram, ("lightInnerCones" + sIndex).data()), lightSource.GetParams(5));
+        glUniform1f(glGetUniformLocation(shaderProgram, ("lightOuterCones" + sIndex).data()), lightSource.GetParams(6));
+        glUniform1i(glGetUniformLocation(shaderProgram, ("lightTypes" + sIndex).data()), lightSource.GetType());
+        iIndex++;
+    }
+
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, sizeOfIndices, GL_UNSIGNED_INT, 0);
+}
+
 void Object::AttachBuffers(std::vector<GLfloat> pObjectVertices, std::vector<GLuint> pObjectIndices)
 {
     sizeOfVertices = sizeof(pObjectVertices);
