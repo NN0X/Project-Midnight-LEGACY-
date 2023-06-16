@@ -151,6 +151,7 @@
     <ClCompile Include="dependencies\include\glad\glad.c" />
     <ClCompile Include="dependencies\include\stb\stb.cpp" />
     <ClCompile Include="source\camera.cpp" />
+    <ClCompile Include="source\datatypes.cpp" />
     <ClCompile Include="source\lightSource.cpp" />
     <ClCompile Include="source\log.cpp" />
     <ClCompile Include="source\main.cpp" />
@@ -162,13 +163,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\camera.h" />
+    <ClInclude Include="source\datatypes.h" />
     <ClInclude Include="source\lightSource.h" />
     <ClInclude Include="source\log.h" />
     <ClInclude Include="source\object.h" />
     <ClInclude Include="source\postprocess.h" />
     <ClInclude Include="source\renderer.h" />
     <ClInclude Include="source\shader.h" />
-    <ClInclude Include="source\structs.h" />
     <ClInclude Include="source\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

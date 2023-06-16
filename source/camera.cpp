@@ -2,94 +2,94 @@
 
 Camera::Camera()
 {
-    position = {0.0f, 0.0f, 0.0f};
-    orientation = {0.0f, 0.0f, -1.0f};
-    up = {0.0f, 1.0f, 0.0f};
-    rotation = {0.0f, 0.0f};
-    view = glm::mat4(1.0f);
-    projection = glm::mat4(1.0f);
-    matrix = glm::mat4(1.0f);
-    FOV = 45.0f;
-    nearClipping = 0.01f;
-    farClipping = 100.0f;
+    position = {0, 0, 0};
+    orientation = {0, 0, -1};
+    up = {0, 1, 0};
+    rotation = {0, 0};
+    view = glm::dmat4(1);
+    projection = glm::dmat4(1);
+    matrix = glm::dmat4(1);
+    FOV = 45;
+    nearClipping = 0.01;
+    farClipping = 100;
 }
 
-Camera::Camera(fVector3 pPosition, fVector3 pOrientation, fVector3 pUp, fVector2 pRotation, float pFOV, float pNearClipping, float pFarClipping)
+Camera::Camera(dVector3 pPosition, dVector3 pOrientation, dVector3 pUp, dVector2 pRotation, double pFOV, double pNearClipping, double pFarClipping)
 {
     position = pPosition;
     orientation = pOrientation;
     up = pUp;
     rotation = pRotation;
-    view = glm::mat4(1.0f);
-    projection = glm::mat4(1.0f);
-    matrix = glm::mat4(1.0f);
+    view = glm::dmat4(1);
+    projection = glm::dmat4(1);
+    matrix = glm::dmat4(1);
     FOV = pFOV;
     nearClipping = pNearClipping;
     farClipping = pFarClipping;
 }
 
-bool Camera::IsVisible(fVector3 pPosition)
+bool Camera::IsVisible(dVector3 pPosition)
 {
-    float distance = sqrt(pow((position.x - pPosition.x), 2) + pow((position.y - pPosition.y), 2) + pow((position.z - pPosition.z), 2));
+    double distance = sqrt(pow((position.x - pPosition.x), 2) + pow((position.y - pPosition.y), 2) + pow((position.z - pPosition.z), 2));
 
     if (distance > farClipping)
         return false;
 }
 
-void Camera::SetPosition(fVector3 pPosition)
+void Camera::SetPosition(dVector3 pPosition)
 {
     position = pPosition;
 }
 
-void Camera::SetOrientation(fVector3 pOrientation)
+void Camera::SetOrientation(dVector3 pOrientation)
 {
     orientation = pOrientation;
 }
 
-void Camera::SetUp(fVector3 pUp)
+void Camera::SetUp(dVector3 pUp)
 {
     up = pUp;
 }
 
-void Camera::SetRotation(fVector2 pRotation)
+void Camera::SetRotation(dVector2 pRotation)
 {
     rotation = pRotation;
 }
 
-void Camera::SetMatrix(u16Vector2 pSize)
+void Camera::SetMatrix(iVector2 pSize)
 {
-    glm::mat4 view = glm::mat4(1.0f);
-    glm::mat4 projection = glm::mat4(1.0f);
+    glm::dmat4 view = glm::dmat4(1);
+    glm::dmat4 projection = glm::dmat4(1);
 
-    glm::vec3 glmPosition = glm::vec3(position.x, position.y, position.z);
-    glm::vec3 glmOrientation = glm::vec3(orientation.x, orientation.y, orientation.z);
-    glm::vec3 glmUp = glm::vec3(up.x, up.y, up.z);
+    glm::dvec3 glmPosition = glm::dvec3(position.x, position.y, position.z);
+    glm::dvec3 glmOrientation = glm::dvec3(orientation.x, orientation.y, orientation.z);
+    glm::dvec3 glmUp = glm::dvec3(up.x, up.y, up.z);
 
     view = glm::lookAt(glmPosition, glmPosition + glmOrientation, glmUp);
-    projection = glm::perspective(glm::radians(FOV), float(pSize.x) / float(pSize.y), nearClipping, farClipping);
+    projection = glm::perspective(glm::radians(FOV), double(pSize.x / pSize.y), nearClipping, farClipping);
     matrix = projection * view;
 }
 
-void Camera::SetFOV(float pFOV)
+void Camera::SetFOV(double pFOV)
 {
     FOV = pFOV;
 }
 
-void Camera::SetNearClipping(float pNearClipping)
+void Camera::SetNearClipping(double pNearClipping)
 {
     nearClipping = pNearClipping;
 }
 
-void Camera::SetFarClipping(float pFarClipping)
+void Camera::SetFarClipping(double pFarClipping)
 {
     farClipping = pFarClipping;
 }
 
-fVector3 Camera::GetPosition() { return position; }
-fVector3 Camera::GetOrientation() { return orientation; }
-fVector3 Camera::GetUp() { return up; }
-fVector2 Camera::GetRotation() { return rotation; }
-glm::mat4 Camera::GetMatrix() { return matrix; }
-float Camera::GetFOV() { return FOV; }
-float Camera::GetNearClipping() { return nearClipping; }
-float Camera::GetFarClipping() { return farClipping; }
+dVector3 Camera::GetPosition() { return position; }
+dVector3 Camera::GetOrientation() { return orientation; }
+dVector3 Camera::GetUp() { return up; }
+dVector2 Camera::GetRotation() { return rotation; }
+glm::dmat4 Camera::GetMatrix() { return matrix; }
+double Camera::GetFOV() { return FOV; }
+double Camera::GetNearClipping() { return nearClipping; }
+double Camera::GetFarClipping() { return farClipping; }

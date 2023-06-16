@@ -8,17 +8,17 @@ Renderer::Renderer()
     MSAA = false;
 }
 
-Renderer::Renderer(u16Vector2 pBegin, u16Vector2 pEnd, bool pMSAA)
+Renderer::Renderer(iVector2 pBegin, iVector2 pEnd, bool pMSAA)
 {
     begin = pBegin;
     end = pEnd;
     MSAA = pMSAA;
-    size = {uint16_t(end.x - begin.x), uint16_t(end.y - begin.y)};
+    size = Vector::Subtract(end, begin);
 }
 
 void Renderer::Draw()
 {
-    glViewport(0, 0, size.x, size.y);
+    glViewport(begin.x, begin.y, end.x, end.y);
     for (Object object : objects)
     {
         if (camera.IsVisible(object.GetPosition()))
@@ -80,11 +80,11 @@ void Renderer::Shutdown()
     }
 }
 
-void Renderer::SetViewport(u16Vector2 pBegin, u16Vector2 pEnd)
+void Renderer::SetViewport(iVector2 pBegin, iVector2 pEnd)
 {
     begin = pBegin;
     end = pEnd;
-    size = {uint16_t(end.x - begin.x), uint16_t(end.y - begin.y)};
+    size = Vector::Subtract(end, begin);
 }
 
 void Renderer::SetCamera(Camera pCamera)
@@ -97,10 +97,11 @@ void Renderer::SetMSAA(bool pMSAA)
     MSAA = pMSAA;
 }
 
-u16Vector2 Renderer::GetSize() { return size; }
-u16Vector2 Renderer::GetBegin() { return begin; }
-u16Vector2 Renderer::GetEnd() { return end; }
+iVector2 Renderer::GetSize() { return size; }
+iVector2 Renderer::GetBegin() { return begin; }
+iVector2 Renderer::GetEnd() { return end; }
 Camera Renderer::GetCamera() { return camera; }
+std::vector<Postprocess> Renderer::GetPostprocesses() { return postprocesses; }
 std::vector<LightSource> Renderer::GetLightSources() { return lightSources; }
 std::vector<Object> Renderer::GetObjects() { return objects; }
 bool Renderer::GetMSAA() { return MSAA; }

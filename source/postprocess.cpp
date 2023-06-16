@@ -1,6 +1,6 @@
 ﻿#include "postprocess.h"
 
-Postprocess::Postprocess(u16Vector2 pSize, int pType)
+Postprocess::Postprocess(iVector2 pSize, int pType)
 {
     type = pType;
     size = pSize;
@@ -52,7 +52,7 @@ Postprocess::Postprocess(u16Vector2 pSize, int pType)
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
-Postprocess::Postprocess(u16Vector2 pSize, uint8_t pMSAA, int pType)
+Postprocess::Postprocess(iVector2 pSize, uint8_t pMSAA, int pType)
 {
     type = pType;
     size = pSize;
@@ -175,7 +175,7 @@ void Postprocess::DetachShader()
     glDeleteProgram(shaderProgram);
 }
 
-void Postprocess::SetSize(u16Vector2 pSize)
+void Postprocess::SetSize(iVector2 pSize)
 {
     size = pSize;
 }
@@ -190,7 +190,7 @@ void Postprocess::SetMSAA(uint8_t pMSAA)
     MSAA = pMSAA;
 }
 
-u16Vector2 Postprocess::GetSize() { return size; }
+iVector2 Postprocess::GetSize() { return size; }
 GLuint Postprocess::GetShaderProgram() { return shaderProgram; }
 GLuint Postprocess::GetVAO() { return VAO; }
 GLuint Postprocess::GetFBO() { return FBO; }

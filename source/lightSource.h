@@ -1,37 +1,37 @@
 ﻿#pragma once
 
-#include "structs.h"
+#include "datatypes.h"
 
 class LightSource
 {
 private:
-    fVector3 position;
-    fVector3 direction;
-    fRGB color;
-    float strength;
-    float ambient;
-    float specularStrength;
-    float intensityFalloff;
-    float inverseEffectiveRange;
-    float innerCone;
-    float outerCone;
+    dVector3 position;
+    dVector3 direction;
+    dRGB color;
+    double strength;
+    double ambient;
+    double specularStrength;
+    double intensityFalloff;
+    double inverseEffectiveRange;
+    double innerCone;
+    double outerCone;
     int type;
 
 public:
     LightSource();
-    LightSource(fVector3, fRGB, float, float, float, float, float);
-    LightSource(fVector3, fVector3, fRGB, float, float, float);
-    LightSource(fVector3, fVector3, fRGB, float, float, float, float, float, float, float);
+    LightSource(dVector3 pPosition, dRGB pColor, double pStrength, double pAmbient, double pSpecularStrength, double pIntensityFalloff, double pInverseEffectiveRange);
+    LightSource(dVector3 pPosition, dVector3 pDirection, dRGB pColor, double pStrength, double pAmbient, double pSpecularStrength);
+    LightSource(dVector3 pPosition, dVector3 pDirection, dRGB pColor, double pStrength, double pAmbient, double pSpecularStrength, double pIntensityFalloff, double pInverseEffectiveRange, double pInnerCone, double pOuterCone);
 
-    void SetPosition(fVector3);
-    void SetDirection(fVector3);
-    void SetColor(fRGB);
-    void SetParams(float, float, float, float, float, float, float);
-    void SetType(int);
+    void SetPosition(dVector3 pPosition);
+    void SetDirection(dVector3 pDirection);
+    void SetColor(dRGB pColor);
+    void SetParams(double pStrength, double pAmbient, double pSpecularStrength, double pIntensityFalloff, double pInverseEffectiveRange, double pInnerCone, double pOuterCone);
+    void SetType(int pType);
 
-    fVector3 GetPosition();
-    fVector3 GetDirection();
-    fRGB GetColor();
-    float GetParams(int);
+    dVector3 GetPosition();
+    dVector3 GetDirection();
+    dRGB GetColor();
+    double GetParams(int pIndex);
     int GetType();
 };

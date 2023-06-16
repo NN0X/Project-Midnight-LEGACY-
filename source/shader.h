@@ -1,12 +1,12 @@
 ﻿#pragma once
 
 #include <fstream>
-#include "structs.h"
+#include "datatypes.h"
 
 namespace Shader
 {
-    GLuint LoadVertex(std::string);
-    GLuint LoadFragment(std::string, int);
+    GLuint LoadVertex(std::string pPath);
+    GLuint LoadFragment(std::string pPath, int pLightsNumber);
 
-    GLuint BuildProgram(GLuint, GLuint);
+    GLuint BuildProgram(GLuint pVertexShader, GLuint pFragmentShader);
 };

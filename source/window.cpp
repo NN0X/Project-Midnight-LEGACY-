@@ -14,7 +14,7 @@ Window::Window()
     VSYNC = false;
 }
 
-Window::Window(u16Vector2 pSize, std::string pTitle, uint8_t pMSAA, bool pIsFullscreen, bool pVSYNC)
+Window::Window(iVector2 pSize, std::string pTitle, uint8_t pMSAA, bool pIsFullscreen, bool pVSYNC)
 {
     size = pSize;
     title = pTitle;
@@ -23,7 +23,7 @@ Window::Window(u16Vector2 pSize, std::string pTitle, uint8_t pMSAA, bool pIsFull
     VSYNC = pVSYNC;
 }
 
-void Window::Init(u16Vector2 pGLFWVersion)
+void Window::Init(iVector2 pGLFWVersion)
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, pGLFWVersion.x); // 4
@@ -41,13 +41,6 @@ void Window::Init(u16Vector2 pGLFWVersion)
     gladLoadGL();
 }
 
-void Window::Shutdown()
-{
-    renderer.Shutdown();
-    glfwDestroyWindow(window);
-    glfwTerminate();
-}
-
 void Window::AttachRenderer(Renderer pRenderer)
 {
     renderer = pRenderer;
@@ -63,7 +56,14 @@ void Window::AttachRenderer(Renderer pRenderer)
     glfwSwapBuffers(window);
 }
 
-void Window::SetSize(u16Vector2 pSize)
+void Window::Shutdown()
+{
+    renderer.Shutdown();
+    glfwDestroyWindow(window);
+    glfwTerminate();
+}
+
+void Window::SetSize(iVector2 pSize)
 {
     size = pSize;
 }
@@ -88,7 +88,7 @@ void Window::SetVSYNC(bool pVSYNC)
     VSYNC = pVSYNC;
 }
 
-u16Vector2 Window::GetSize() { return size; }
+iVector2 Window::GetSize() { return size; }
 std::string Window::GetTitle() { return title; }
 uint8_t Window::GetMSAA() { return MSAA; }
 bool Window::GetFullscreen() { return isFullscreen; }

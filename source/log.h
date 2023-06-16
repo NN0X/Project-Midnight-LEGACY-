@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "structs.h"
+#include "datatypes.h"
 
 namespace Log
 {
-    void Log(double);
-    void Log(double, std::string);
+    void Log(double pInput);
+    void Log(double pInput, std::string pName);
 
-    void Log(std::string);
-    void Log(std::string, std::string);
+    void Log(std::string pInput);
+    void Log(std::string pInput, std::string pName);
 };

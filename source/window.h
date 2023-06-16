@@ -1,12 +1,12 @@
 ﻿#pragma once
 
-#include "structs.h"
+#include "datatypes.h"
 #include "renderer.h"
 
 class Window
 {
 private:
-    u16Vector2 size;
+    iVector2 size;
     std::string title;
     uint8_t MSAA;
     bool isFullscreen;
@@ -17,19 +17,19 @@ public:
     Renderer renderer;
 
     Window();
-    Window(u16Vector2, std::string, uint8_t, bool, bool);
+    Window(iVector2 pSize, std::string pTitle, uint8_t pMSAA, bool pIsFullscreen, bool pVSYNC);
 
-    void Init(u16Vector2);
-    void AttachRenderer(Renderer);
+    void Init(iVector2 pGLFWVersion);
+    void AttachRenderer(Renderer pRenderer);
     void Shutdown();
 
-    void SetSize(u16Vector2);
-    void SetTitle(std::string);
-    void SetMSAA(uint8_t);
-    void SetFullscreen(bool);
-    void SetVSYNC(bool);
+    void SetSize(iVector2 pSize);
+    void SetTitle(std::string pTitle);
+    void SetMSAA(uint8_t pMSAA);
+    void SetFullscreen(bool pIsFullscreen);
+    void SetVSYNC(bool pVSYNC);
 
-    u16Vector2 GetSize();
+    iVector2 GetSize();
     std::string GetTitle();
     uint8_t GetMSAA();
     bool GetFullscreen();

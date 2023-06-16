@@ -31,33 +31,33 @@ vec4 PointLight(vec3 lightColor, vec3 lightPos, float lightStrength, float light
     vec3 lightVector = lightPos - currentPos;
     float lightDistance = length(lightVector);
 
-    float lightIntensity = 1.0f / (lightIntensityFalloff * pow(lightDistance, 2.0f) + lightEffectiveRangeInverse * lightDistance + 1.0f);
+    float lightIntensity = 1 / (lightIntensityFalloff * pow(lightDistance, 2) + lightEffectiveRangeInverse * lightDistance + 1);
 
     vec3 nNormal = normalize(normal); 
     vec3 lightDirectionRelative = normalize(lightVector);
-    float diffuse = max(dot(nNormal, lightDirectionRelative), 0.0f);
+    float diffuse = max(dot(nNormal, lightDirectionRelative), 0);
 
-    float specularLight = 0.5f;
+    float specularLight = 0.5;
     vec3 viewDirection = normalize(cameraPos - currentPos);
     vec3 reflectionDirection = reflect(-lightDirectionRelative, nNormal);
-    float specularAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), specularStrength);
+    float specularAmount = pow(max(dot(viewDirection, reflectionDirection), 0), specularStrength);
     float specular = specularAmount * specularLight;
 
-    return vec4(lightColor * (diffuse * lightIntensity * lightStrength + specular * lightIntensity * lightStrength + lightAmbient), 1.0f);
+    return vec4(lightColor * (diffuse * lightIntensity * lightStrength + specular * lightIntensity * lightStrength + lightAmbient), 1);
 }
 
 vec4 DirectionalLight(vec3 lightColor, vec3 lightPos, vec3 lightDirection, float lightStrength, float lightAmbient, float specularStrength)
 {
     vec3 nNormal = normalize(normal); 
-    float diffuse = max(dot(nNormal, -lightDirection), 0.0f);
+    float diffuse = max(dot(nNormal, -lightDirection), 0);
 
-    float specularLight = 0.5f;
+    float specularLight = 0.5;
     vec3 viewDirection = normalize(cameraPos - currentPos);
     vec3 reflectionDirection = reflect(lightDirection, nNormal);
-    float specularAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), specularStrength);
+    float specularAmount = pow(max(dot(viewDirection, reflectionDirection), 0), specularStrength);
     float specular = specularAmount * specularLight;
 
-    return vec4(lightColor * (diffuse * lightStrength + specular * lightStrength + lightAmbient), 1.0f);
+    return vec4(lightColor * (diffuse * lightStrength + specular * lightStrength + lightAmbient), 1);
 }
 
 vec4 SpotLight(vec3 lightColor, vec3 lightPos, vec3 lightDirection, float lightStrength, float lightAmbient, float specularStrength, float lightIntensityFalloff, float lightEffectiveRangeInverse, float lightInnerCone, float lightOuterCone)
@@ -65,22 +65,22 @@ vec4 SpotLight(vec3 lightColor, vec3 lightPos, vec3 lightDirection, float lightS
     vec3 lightVector = lightPos - currentPos;
     float lightDistance = length(lightVector);
 
-    float lightIntensity = 1.0f / (lightIntensityFalloff * pow(lightDistance, 2.0f) + lightEffectiveRangeInverse * lightDistance + 1.0f);
+    float lightIntensity = 1 / (lightIntensityFalloff * pow(lightDistance, 2) + lightEffectiveRangeInverse * lightDistance + 1);
 
     vec3 nNormal = normalize(normal); 
     vec3 lightDirectionRelative = normalize(lightVector);
-    float diffuse = max(dot(nNormal, lightDirectionRelative), 0.0f);
+    float diffuse = max(dot(nNormal, lightDirectionRelative), 0);
 
-    float specularLight = 0.5f;
+    float specularLight = 0.5;
     vec3 viewDirection = normalize(cameraPos - currentPos);
     vec3 reflectionDirection = reflect(-lightDirectionRelative, nNormal);
-    float specularAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), specularStrength);
+    float specularAmount = pow(max(dot(viewDirection, reflectionDirection), 0), specularStrength);
     float specular = specularAmount * specularLight;
 
     float angle = dot(lightDirection, -lightDirectionRelative);
-    float spotIntensity = clamp((angle - lightOuterCone) / (lightInnerCone - lightOuterCone), 0.0f, 1.0f);
+    float spotIntensity = clamp((angle - lightOuterCone) / (lightInnerCone - lightOuterCone), 0, 1);
 
-    return vec4(lightColor * (diffuse * lightIntensity * lightStrength * spotIntensity + specular * lightIntensity * lightStrength * spotIntensity + lightAmbient), 1.0f);
+    return vec4(lightColor * (diffuse * lightIntensity * lightStrength * spotIntensity + specular * lightIntensity * lightStrength * spotIntensity + lightAmbient), 1);
 }
 
 void main()
@@ -99,5 +99,5 @@ void main()
             light += SpotLight(lightColors[index], lightPoss[index], lightDirections[index], lightStrengths[index], lightAmbients[index], specularStrengths[index], lightIntensityFalloffs[index], lightEffectiveRangeInverses[index], lightInnerCones[index], lightOuterCones[index]);
     }
 
-    FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1.0f) * light;
+    FragColor = texture(tex, texCoord) * objColor * vec4(objEmission, 1) * light;
 }

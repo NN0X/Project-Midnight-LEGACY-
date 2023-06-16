@@ -2,35 +2,35 @@
 
 LightSource::LightSource()
 {
-    position = {0.0f, 0.0f, 0.0f};
-    direction = {0.0f, -1.0f, 0.0f};
-    color = {1.0f, 1.0f, 1.0f};
-    strength = 1.0f;
-    ambient = 0.3f;
-    specularStrength = 0.5f;
-    intensityFalloff = 0.5f;
-    inverseEffectiveRange = 0.5f;
-    innerCone = 0.95f;
-    outerCone = 0.9f;
+    position = {0, 0, 0};
+    direction = {0, -1, 0};
+    color = {1, 1, 1};
+    strength = 1;
+    ambient = 0.3;
+    specularStrength = 0.5;
+    intensityFalloff = 0.5;
+    inverseEffectiveRange = 0.5;
+    innerCone = 0.95;
+    outerCone = 0.9;
     type = 0;
 }
 
-LightSource::LightSource(fVector3 pPosition, fRGB pColor, float pStrength, float pAmbient, float pSpecularStrength, float pIntensityFalloff, float pInverseEffectiveRange)
+LightSource::LightSource(dVector3 pPosition, dRGB pColor, double pStrength, double pAmbient, double pSpecularStrength, double pIntensityFalloff, double pInverseEffectiveRange)
 {
     position = pPosition;
-    direction = {0.0f, 0.0f, 0.0f};
+    direction = {0, 0, 0};
     color = pColor;
     strength = pStrength;
     ambient = pAmbient;
     specularStrength = pSpecularStrength;
     intensityFalloff = pIntensityFalloff;
     inverseEffectiveRange = pInverseEffectiveRange;
-    innerCone = 0.0f;
-    outerCone = 0.0f;
+    innerCone = 0;
+    outerCone = 0;
     type = 0;
 }
 
-LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGB pColor, float pStrength, float pAmbient, float pSpecularStrength)
+LightSource::LightSource(dVector3 pPosition, dVector3 pDirection, dRGB pColor, double pStrength, double pAmbient, double pSpecularStrength)
 {
     position = pPosition;
     direction = pDirection;
@@ -38,14 +38,14 @@ LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGB pColor, f
     strength = pStrength;
     ambient = pAmbient;
     specularStrength = pSpecularStrength;
-    intensityFalloff = 0.0f;
-    inverseEffectiveRange = 0.0f;
-    innerCone = 0.0f;
-    outerCone = 0.0f;
+    intensityFalloff = 0;
+    inverseEffectiveRange = 0;
+    innerCone = 0;
+    outerCone = 0;
     type = 1;
 }
 
-LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGB pColor, float pStrength, float pAmbient, float pSpecularStrength, float pIntensityFalloff, float pInverseEffectiveRange, float pInnerCone, float pOuterCone)
+LightSource::LightSource(dVector3 pPosition, dVector3 pDirection, dRGB pColor, double pStrength, double pAmbient, double pSpecularStrength, double pIntensityFalloff, double pInverseEffectiveRange, double pInnerCone, double pOuterCone)
 {
     position = pPosition;
     direction = pDirection;
@@ -60,22 +60,22 @@ LightSource::LightSource(fVector3 pPosition, fVector3 pDirection, fRGB pColor, f
     type = 2;
 }
 
-void LightSource::SetPosition(fVector3 pPosition)
+void LightSource::SetPosition(dVector3 pPosition)
 {
     position = pPosition;
 }
 
-void LightSource::SetDirection(fVector3 pDirection)
+void LightSource::SetDirection(dVector3 pDirection)
 {
     direction = pDirection;
 }
 
-void LightSource::SetColor(fRGB pColor)
+void LightSource::SetColor(dRGB pColor)
 {
     color = pColor;
 }
 
-void LightSource::SetParams(float pStrength, float pAmbient, float pSpecularStrength, float pIntensityFalloff, float pInverseEffectiveRange, float pInnerCone, float pOuterCone)
+void LightSource::SetParams(double pStrength, double pAmbient, double pSpecularStrength, double pIntensityFalloff, double pInverseEffectiveRange, double pInnerCone, double pOuterCone)
 {
     strength = pStrength;
     ambient = pAmbient;
@@ -91,10 +91,10 @@ void LightSource::SetType(int pType)
     type = pType;
 }
 
-fVector3 LightSource::GetPosition() { return position; }
-fVector3 LightSource::GetDirection() { return direction; }
-fRGB LightSource::GetColor() { return color; }
-float LightSource::GetParams(int pIndex)
+dVector3 LightSource::GetPosition() { return position; }
+dVector3 LightSource::GetDirection() { return direction; }
+dRGB LightSource::GetColor() { return color; }
+double LightSource::GetParams(int pIndex)
 {
     switch (pIndex)
     {

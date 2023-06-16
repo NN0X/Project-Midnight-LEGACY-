@@ -39,7 +39,7 @@ GLuint ImportImage(Object object, int textureFiltering, std::string path)
     return texture;
 }
 
-Camera Inputs(Window window, float speed, float sensitivity)
+Camera Inputs(Window window, double speed, double sensitivity)
 {
 
     if (glfwGetKey(window.window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -95,9 +95,9 @@ Camera Inputs(Window window, float speed, float sensitivity)
     Renderer renderer = window.renderer;
     Camera camera = renderer.GetCamera();
 
-    glm::vec3 position = glm::vec3(camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-    glm::vec3 orientation = glm::vec3(camera.GetOrientation().x, camera.GetOrientation().y, camera.GetOrientation().z);
-    glm::vec3 up = glm::vec3(camera.GetUp().x, camera.GetUp().y, camera.GetUp().z);
+    glm::dvec3 position = glm::dvec3(camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
+    glm::dvec3 orientation = glm::dvec3(camera.GetOrientation().x, camera.GetOrientation().y, camera.GetOrientation().z);
+    glm::dvec3 up = glm::dvec3(camera.GetUp().x, camera.GetUp().y, camera.GetUp().z);
 
     position += movementModifier.x * speed * orientation;
     position += movementModifier.y * speed * up;
@@ -105,12 +105,12 @@ Camera Inputs(Window window, float speed, float sensitivity)
 
     camera.SetRotation({rotationModifier.x * sensitivity, rotationModifier.y * sensitivity});
 
-    glm::mat4 rotationMatrix = glm::mat4(1.0f);
-    rotationMatrix = glm::rotate(rotationMatrix, glm::radians(camera.GetRotation().x), glm::normalize(glm::cross(orientation, up)));
-    rotationMatrix = glm::rotate(rotationMatrix, glm::radians(camera.GetRotation().y), up);
-    orientation = glm::vec3(rotationMatrix * glm::vec4(orientation, 0.0f));
+    glm::dmat4 rotationMatrix = glm::dmat4(1);
+    rotationMatrix = glm::rotate(rotationMatrix, glm::radians(double(camera.GetRotation().x)), glm::normalize(glm::cross(orientation, up)));
+    rotationMatrix = glm::rotate(rotationMatrix, glm::radians(double(camera.GetRotation().y)), up);
+    orientation = glm::dvec3(rotationMatrix * glm::vec4(orientation, 0));
 
-    camera.SetRotation({0.0f, 0.0f});
+    camera.SetRotation({0, 0});
     camera.SetOrientation({orientation[0], orientation[1], orientation[2]});
     camera.SetPosition({position[0], position[1], position[2]});
     //
@@ -121,15 +121,16 @@ Camera Inputs(Window window, float speed, float sensitivity)
 
 std::pair<Window, int> RendererLoop(Window window, int frames)
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     Renderer renderer = window.renderer;
-    Camera camera = Inputs(window, 0.001f, 0.01f);
+    Camera camera = Inputs(window, 0.001, 0.01);
     camera.SetMatrix(window.renderer.GetSize());
     renderer.SetCamera(camera);
     window.renderer = renderer;
 
+    renderer.Draw();
     renderer.DrawPostprocessed();
 
     glfwSwapBuffers(window.window);
@@ -146,10 +147,10 @@ int main()
     std::vector<GLfloat> vertices =
         {
             //   COORDINATES //  TexCoord  //  NORMALS       //
-            -0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, //
-            -0.5f, 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  //
-            0.5f, 0.0f, 0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,   //
-            0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f   //
+            -0.5, 0, -0.5, 0, 0, 0, 1, 0, //
+            -0.5, 0, 0.5, 0, 1, 0, 1, 0,  //
+            0.5, 0, 0.5, 1, 1, 0, 1, 0,   //
+            0.5, 0, -0.5, 1, 0, 0, 1, 0   //
         };
 
     std::vector<GLuint> indices =
@@ -160,16 +161,16 @@ int main()
     Window window({1000, 1000}, "Renderer", 4, false, false);
     window.Init({4, 6});
     Renderer renderer({0, 0}, {1000, 1000}, true);
-    Camera camera({0.0f, 0.5f, 2.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}, 45.0f, 0.01f, 100.0f);
-    LightSource lightSource({0.0f, 1.0f, 0.0f}, {0.0f, -1.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, 1.0f, 0.3f, 0.95f, 0.5f, 0.5f, 0.95f, 0.9f);
+    Camera camera({0, 0.5, 2}, {0, 0, -1}, {0, 1, 0}, {0, 0}, 45, 0.01, 100);
+    LightSource lightSource({0, 1, 0}, {0, -1, 0}, {1, 1, 1}, 1, 0.3, 0.95, 0.5, 0.5, 0.95, 0.9);
 
     Postprocess postprocess(renderer.GetSize(), window.GetMSAA(), 0);
     postprocess.AttachShader("resources/shaders/framebufferVertex.glsl", "resources/shaders/framebufferFrag.glsl");
 
-    Postprocess postprocessShadows(renderer.GetSize(), 1);
-    postprocessShadows.AttachShader("resources/shaders/shadowMapVertex.glsl", "resources/shaders/shadowMapFrag.glsl");
+    // Postprocess postprocessShadows(renderer.GetSize(), 1);
+    // postprocessShadows.AttachShader("resources/shaders/shadowMapVertex.glsl", "resources/shaders/shadowMapFrag.glsl");
 
-    Object object({0.0f, 0.0f, 0.0f}, {10.0f, 10.0f, 10.0f}, {1.0f, 1.0f, 1.0f, 1.0f}, {1.0f, 1.0f, 1.0f});
+    Object object({0, 0, 0}, {10, 10, 10}, {1, 1, 1, 1}, {1, 1, 1});
     object.AttachBuffers(vertices, indices);
     object.AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl", 1); // MAX 92 LIGHTSOURCES
     object.SetTexture(ImportImage(object, GL_LINEAR, "default.png"));
@@ -178,26 +179,26 @@ int main()
     vertices =
         {
             //   COORDINATES   /  TexCoord /     NORMALS       //
-            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,  // Bottom side
-            -0.5f, 0.0f, -0.5f, 0.0f, 5.0f, 0.0f, -1.0f, 0.0f, // Bottom side
-            0.5f, 0.0f, -0.5f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,  // Bottom side
-            0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,   // Bottom side
+            -0.5, 0, 0.5, 0, 0, 0, -1, 0,  // Bottom side
+            -0.5, 0, -0.5, 0, 5, 0, -1, 0, // Bottom side
+            0.5, 0, -0.5, 1, 1, 0, -1, 0,  // Bottom side
+            0.5, 0, 0.5, 1, 0, 0, -1, 0,   // Bottom side
 
-            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, -0.8f, 0.5f, 0.0f,  // Left Side
-            -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, -0.8f, 0.5f, 0.0f, // Left Side
-            0.0f, 0.8f, 0.0f, 0.5f, 1.0f, -0.8f, 0.5f, 0.0f,   // Left Side
+            -0.5, 0, 0.5, 0, 0, -0.8, 0.5, 0,  // Left Side
+            -0.5, 0, -0.5, 1, 0, -0.8, 0.5, 0, // Left Side
+            0, 0.8, 0, 0.5, 1, -0.8, 0.5, 0,   // Left Side
 
-            -0.5f, 0.0f, -0.5f, 1.0f, 0.0f, 0.0f, 0.5f, -0.8f, // Non-facing side
-            0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f, -0.8f,  // Non-facing side
-            0.0f, 0.8f, 0.0f, 0.5f, 1.0f, 0.0f, 0.5f, -0.8f,   // Non-facing side
+            -0.5, 0, -0.5, 1, 0, 0, 0.5, -0.8, // Non-facing side
+            0.5, 0, -0.5, 0, 0, 0, 0.5, -0.8,  // Non-facing side
+            0, 0.8, 0, 0.5, 1, 0, 0.5, -0.8,   // Non-facing side
 
-            0.5f, 0.0f, -0.5f, 0.0f, 0.0f, 0.8f, 0.5f, 0.0f, // Right side
-            0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.8f, 0.5f, 0.0f,  // Right side
-            0.0f, 0.8f, 0.0f, 0.5f, 1.0f, 0.8f, 0.5f, 0.0f,  // Right side
+            0.5, 0, -0.5, 0, 0, 0.8, 0.5, 0, // Right side
+            0.5, 0, 0.5, 1, 0, 0.8, 0.5, 0,  // Right side
+            0, 0.8, 0, 0.5, 1, 0.8, 0.5, 0,  // Right side
 
-            0.5f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, 0.5f, 0.8f,  // Facing side
-            -0.5f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 0.5f, 0.8f, // Facing side
-            0.0f, 0.8f, 0.0f, 0.5f, 1.0f, 0.0f, 0.5f, 0.8f   // Facing side
+            0.5, 0, 0.5, 1, 0, 0, 0.5, 0.8,  // Facing side
+            -0.5, 0, 0.5, 0, 0, 0, 0.5, 0.8, // Facing side
+            0, 0.8, 0, 0.5, 1, 0, 0.5, 0.8   // Facing side
         };
 
     indices =
@@ -210,8 +211,8 @@ int main()
             13, 15, 14  // Facing side
         };
 
-    object.SetPosition({1.0f, 0.0f, 0.0f});
-    object.SetScale({1.0f, 1.0f, 1.0f});
+    object.SetPosition({1, 0, 0});
+    object.SetScale({1, 1, 1});
     object.AttachBuffers(vertices, indices);
     renderer.AttachObject(object);
 
@@ -221,7 +222,7 @@ int main()
     renderer.AttachLightSource(lightSource);
 
     renderer.AttachPostprocess(postprocess);
-    renderer.AttachPostprocess(postprocessShadows);
+    // renderer.AttachPostprocess(postprocessShadows);
 
     window.AttachRenderer(renderer);
 

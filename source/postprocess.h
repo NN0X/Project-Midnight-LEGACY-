@@ -1,13 +1,13 @@
 ﻿#pragma once
 
-#include "structs.h"
+#include "datatypes.h"
 #include "shader.h"
 
 class Postprocess
 {
 private:
     int type; // 0 - base / simple effect 1 - shadow map
-    u16Vector2 size;
+    iVector2 size;
     GLuint shaderProgram;
     GLuint VAO;
     GLuint VBO;
@@ -20,19 +20,19 @@ private:
     uint8_t MSAA;
 
 public:
-    Postprocess(u16Vector2, int);
-    Postprocess(u16Vector2, uint8_t, int);
+    Postprocess(iVector2 pSize, int pType);
+    Postprocess(iVector2 pSize, uint8_t pMSAA, int pType);
 
     void Draw();
     void Use();
-    void AttachShader(std::string, std::string);
+    void AttachShader(std::string pPathVertex, std::string pPathFragment);
     void DetachShader();
 
-    void SetSize(u16Vector2);
-    void SetShaderProgram(GLuint);
-    void SetMSAA(uint8_t);
+    void SetSize(iVector2 pSize);
+    void SetShaderProgram(GLuint pShaderProgram);
+    void SetMSAA(uint8_t pMSAA);
 
-    u16Vector2 GetSize();
+    iVector2 GetSize();
     GLuint GetShaderProgram();
     GLuint GetVAO();
     GLuint GetFBO();

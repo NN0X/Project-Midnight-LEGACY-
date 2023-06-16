@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "structs.h"
+#include "datatypes.h"
 #include "shader.h"
 #include "camera.h"
 #include "lightSource.h"
@@ -12,11 +12,11 @@
 class Object
 {
 private:
-    fVector3 position;
-    fVector3 scale;
-    fRGBA color;
-    fRGB emission;
-    glm::mat4 matrix;
+    dVector3 position;
+    dVector3 scale;
+    dRGBA color;
+    dRGB emission;
+    glm::dmat4 matrix;
     GLuint shaderProgram;
     GLuint VAO;
     GLuint VBO;
@@ -27,27 +27,27 @@ private:
 
 public:
     Object();
-    Object(fVector3, fVector3, fRGBA, fRGB);
+    Object(dVector3 pPosition, dVector3 pScale, dRGBA pColor, dRGB pEmission);
 
-    void Draw(Camera, std::vector<LightSource>, bool);
-    void AttachBuffers(std::vector<GLfloat>, std::vector<GLuint>);
+    void Draw(Camera pCamera, std::vector<LightSource> pLightSources, bool pMSAA);
+    void AttachBuffers(std::vector<GLfloat> pObjectVertices, std::vector<GLuint> pObjectIndices);
     void DetachBuffers();
-    void AttachShader(std::string, std::string, int);
+    void AttachShader(std::string pPathVertex, std::string pPathFragment, int pLightsNumber);
     void DetachShader();
 
-    void SetPosition(fVector3);
-    void SetScale(fVector3);
-    void SetColor(fRGBA);
-    void SetEmission(fRGB);
-    void SetShader(GLuint);
-    void SetTexture(GLuint);
-    void SetSizeOfIndices(int);
+    void SetPosition(dVector3 pPosition);
+    void SetScale(dVector3 pScale);
+    void SetColor(dRGBA pColor);
+    void SetEmission(dRGB pEmission);
+    void SetShader(GLuint pShaderProgram);
+    void SetTexture(GLuint pTexture);
+    void SetSizeOfIndices(int pSizeOfIndices);
 
-    fVector3 GetPosition();
-    fVector3 GetScale();
-    fRGBA GetColor();
-    fRGB GetEmission();
-    glm::mat4 GetMatrix();
+    dVector3 GetPosition();
+    dVector3 GetScale();
+    dRGBA GetColor();
+    dRGB GetEmission();
+    glm::dmat4 GetMatrix();
     GLuint GetShader();
     GLuint GetVAO();
     GLuint GetTexture();

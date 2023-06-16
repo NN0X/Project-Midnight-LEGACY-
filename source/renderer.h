@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "structs.h"
+#include "datatypes.h"
 #include "camera.h"
 #include "lightSource.h"
 #include "object.h"
@@ -9,9 +9,9 @@
 class Renderer
 {
 private:
-    u16Vector2 size;
-    u16Vector2 begin;
-    u16Vector2 end;
+    iVector2 size;
+    iVector2 begin;
+    iVector2 end;
     Camera camera;
     std::vector<Postprocess> postprocesses;
     std::vector<LightSource> lightSources;
@@ -20,25 +20,25 @@ private:
 
 public:
     Renderer();
-    Renderer(u16Vector2, u16Vector2, bool);
+    Renderer(iVector2 pBegin, iVector2 pEnd, bool pMSAA);
 
     void Draw();
     void DrawPostprocessed();
-    void AttachPostprocess(Postprocess);
-    void DetachPostprocess(int);
-    void AttachLightSource(LightSource);
-    void DetachLightSource(int);
-    void AttachObject(Object);
-    void DetachObject(int);
+    void AttachPostprocess(Postprocess pPostprocess);
+    void DetachPostprocess(int pIndex);
+    void AttachLightSource(LightSource pLightSource);
+    void DetachLightSource(int pIndex);
+    void AttachObject(Object pObject);
+    void DetachObject(int pIndex);
     void Shutdown();
 
-    void SetViewport(u16Vector2, u16Vector2);
-    void SetCamera(Camera);
-    void SetMSAA(bool);
+    void SetViewport(iVector2 pBegin, iVector2 pEnd);
+    void SetCamera(Camera pCamera);
+    void SetMSAA(bool pMSAA);
 
-    u16Vector2 GetSize();
-    u16Vector2 GetBegin();
-    u16Vector2 GetEnd();
+    iVector2 GetSize();
+    iVector2 GetBegin();
+    iVector2 GetEnd();
     Camera GetCamera();
     std::vector<Postprocess> GetPostprocesses();
     std::vector<LightSource> GetLightSources();

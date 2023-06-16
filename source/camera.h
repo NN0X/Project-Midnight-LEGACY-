@@ -2,43 +2,43 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "structs.h"
+#include "datatypes.h"
 
 class Camera
 {
 private:
-    fVector3 position;
-    fVector3 orientation;
-    fVector3 up;
-    fVector2 rotation;
-    glm::mat4 view;
-    glm::mat4 projection;
-    glm::mat4 matrix;
-    float FOV;
-    float nearClipping;
-    float farClipping;
+    dVector3 position;
+    dVector3 orientation;
+    dVector3 up;
+    dVector2 rotation;
+    glm::dmat4 view;
+    glm::dmat4 projection;
+    glm::dmat4 matrix;
+    double FOV;
+    double nearClipping;
+    double farClipping;
 
 public:
     Camera();
-    Camera(fVector3, fVector3, fVector3, fVector2, float, float, float);
+    Camera(dVector3 pPosition, dVector3 pOrientation, dVector3 pUp, dVector2 pRotation, double pFOV, double pNearClipping, double pFarClipping);
 
-    bool IsVisible(fVector3);
+    bool IsVisible(dVector3 pPosition);
 
-    void SetPosition(fVector3);
-    void SetOrientation(fVector3);
-    void SetUp(fVector3);
-    void SetRotation(fVector2);
-    void SetMatrix(u16Vector2);
-    void SetFOV(float);
-    void SetNearClipping(float);
-    void SetFarClipping(float);
+    void SetPosition(dVector3 pPosition);
+    void SetOrientation(dVector3 pOrientation);
+    void SetUp(dVector3 pUp);
+    void SetRotation(dVector2 pRotation);
+    void SetMatrix(iVector2 pSize);
+    void SetFOV(double pFOV);
+    void SetNearClipping(double pNearClipping);
+    void SetFarClipping(double pFarClipping);
 
-    fVector3 GetPosition();
-    fVector3 GetOrientation();
-    fVector3 GetUp();
-    fVector2 GetRotation();
-    glm::mat4 GetMatrix();
-    float GetFOV();
-    float GetNearClipping();
-    float GetFarClipping();
+    dVector3 GetPosition();
+    dVector3 GetOrientation();
+    dVector3 GetUp();
+    dVector2 GetRotation();
+    glm::dmat4 GetMatrix();
+    double GetFOV();
+    double GetNearClipping();
+    double GetFarClipping();
 };

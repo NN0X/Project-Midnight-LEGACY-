@@ -2,24 +2,26 @@
 
 Object::Object()
 {
-    position = {0.0f, 0.0f, 0.0f};
-    scale = {1.0f, 1.0f, 1.0f};
-    color = {1.0f, 1.0f, 1.0f, 1.0f};
-    emission = {1.0f, 1.0f, 1.0f};
-    matrix = glm::mat4(1.0f);
+    position = {0, 0, 0};
+    scale = {1, 1, 1};
+    color = {1, 1, 1, 1};
+    emission = {1, 1, 1};
+    matrix = glm::dmat4(1);
 }
 
-Object::Object(fVector3 pPosition, fVector3 pScale, fRGBA pColor, fRGB pEmission)
+Object::Object(dVector3 pPosition, dVector3 pScale, dRGBA pColor, dRGB pEmission)
 {
     position = pPosition;
     scale = pScale;
     color = pColor;
     emission = pEmission;
-    matrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, position.z));
+    matrix = glm::translate(glm::dmat4(1), glm::dvec3(position.x, position.y, position.z));
 }
 
 void Object::Draw(Camera pCamera, std::vector<LightSource> pLightSources, bool pMSAA)
 {
+    glEnable(GL_DEPTH_TEST);
+
     if (pMSAA == true)
         glEnable(GL_MULTISAMPLE);
     else
@@ -27,8 +29,8 @@ void Object::Draw(Camera pCamera, std::vector<LightSource> pLightSources, bool p
 
     glUseProgram(shaderProgram);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "camMatrix"), 1, GL_FALSE, glm::value_ptr(pCamera.GetMatrix()));
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(matrix));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "camMatrix"), 1, GL_FALSE, glm::value_ptr(glm::mat4(pCamera.GetMatrix())));
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(glm::mat4(matrix)));
     glUniform3f(glGetUniformLocation(shaderProgram, "objScale"), scale.x, scale.y, scale.z);
     glUniform3f(glGetUniformLocation(shaderProgram, "cameraPos"), pCamera.GetPosition().x, pCamera.GetPosition().y, pCamera.GetPosition().z);
     glUniform4f(glGetUniformLocation(shaderProgram, "objColor"), color.r, color.g, color.b, color.a);
@@ -104,23 +106,23 @@ void Object::DetachShader()
     glDeleteProgram(shaderProgram);
 }
 
-void Object::SetPosition(fVector3 pPosition)
+void Object::SetPosition(dVector3 pPosition)
 {
     position = pPosition;
-    matrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, position.z));
+    matrix = glm::translate(glm::dmat4(1), glm::dvec3(position.x, position.y, position.z));
 }
 
-void Object::SetScale(fVector3 pScale)
+void Object::SetScale(dVector3 pScale)
 {
     scale = pScale;
 }
 
-void Object::SetColor(fRGBA pColor)
+void Object::SetColor(dRGBA pColor)
 {
     color = pColor;
 }
 
-void Object::SetEmission(fRGB pEmission)
+void Object::SetEmission(dRGB pEmission)
 {
     emission = pEmission;
 }
@@ -140,14 +142,14 @@ void Object::SetSizeOfIndices(int pSizeOfIndices)
     sizeOfIndices = pSizeOfIndices;
 }
 
-fVector3 Object::GetPosition()
+dVector3 Object::GetPosition()
 {
     return position;
 }
-fVector3 Object::GetScale() { return scale; }
-fRGBA Object::GetColor() { return color; }
-fRGB Object::GetEmission() { return emission; }
-glm::mat4 Object::GetMatrix() { return matrix; }
+dVector3 Object::GetScale() { return scale; }
+dRGBA Object::GetColor() { return color; }
+dRGB Object::GetEmission() { return emission; }
+glm::dmat4 Object::GetMatrix() { return matrix; }
 GLuint Object::GetShader() { return shaderProgram; }
 GLuint Object::GetVAO() { return VAO; }
 GLuint Object::GetTexture() { return texture; }
