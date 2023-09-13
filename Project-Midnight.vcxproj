@@ -151,6 +151,7 @@
     <ClCompile Include="dependencies\include\glad\glad.c" />
     <ClCompile Include="dependencies\include\stb\stb.cpp" />
     <ClCompile Include="source\camera.cpp" />
+    <ClCompile Include="source\config.cpp" />
     <ClCompile Include="source\datatypes.cpp" />
     <ClCompile Include="source\lightSource.cpp" />
     <ClCompile Include="source\log.cpp" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\camera.h" />
+    <ClInclude Include="source\config.h" />
     <ClInclude Include="source\datatypes.h" />
     <ClInclude Include="source\lightSource.h" />
     <ClInclude Include="source\log.h" />

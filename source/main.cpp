@@ -9,6 +9,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "window.h"
+#include "config.h"
 
 GLuint ImportImage(Object object, int textureFiltering, std::string path)
 {
@@ -130,7 +131,7 @@ std::pair<Window, int> RendererLoop(Window window, int frames)
     renderer.SetCamera(camera);
     window.renderer = renderer;
 
-    renderer.Draw();
+    // renderer.Draw();
     renderer.DrawPostprocessed();
 
     glfwSwapBuffers(window.window);
@@ -144,6 +145,8 @@ std::pair<Window, int> RendererLoop(Window window, int frames)
 
 int main()
 {
+    Config *config = new Config("", 0);
+
     std::vector<GLfloat> vertices =
         {
             //   COORDINATES //  TexCoord  //  NORMALS       //
@@ -158,23 +161,23 @@ int main()
             0, 3, 1, 1, 2, 3 //
         };
 
-    Window window({1000, 1000}, "Renderer", 4, false, false);
-    window.Init({4, 6});
-    Renderer renderer({0, 0}, {1000, 1000}, true);
-    Camera camera({0, 0.5, 2}, {0, 0, -1}, {0, 1, 0}, {0, 0}, 45, 0.01, 100);
-    LightSource lightSource({0, 1, 0}, {0, -1, 0}, {1, 1, 1}, 1, 0.3, 0.95, 0.5, 0.5, 0.95, 0.9);
+    Window *window = new Window({1000, 1000}, "Renderer", 4, false, false);
+    window->Init({4, 6});
+    Renderer *renderer = new Renderer({0, 0}, {1000, 1000}, true);
+    Camera *camera = new Camera({0, 0.5, 2}, {0, 0, -1}, {0, 1, 0}, {0, 0}, 45, 0.01, 100);
+    LightSource *lightSource = new LightSource({0, 1, 0}, {0, -1, 0}, {1, 1, 1}, 1, 0.3, 0.95, 0.5, 0.5, 0.95, 0.9);
 
-    Postprocess postprocess(renderer.GetSize(), window.GetMSAA(), 0);
+    Postprocess postprocess(renderer->GetSize(), window->GetMSAA(), 0);
     postprocess.AttachShader("resources/shaders/framebufferVertex.glsl", "resources/shaders/framebufferFrag.glsl");
 
     // Postprocess postprocessShadows(renderer.GetSize(), 1);
     // postprocessShadows.AttachShader("resources/shaders/shadowMapVertex.glsl", "resources/shaders/shadowMapFrag.glsl");
 
-    Object object({0, 0, 0}, {10, 10, 10}, {1, 1, 1, 1}, {1, 1, 1});
-    object.AttachBuffers(vertices, indices);
-    object.AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl", 1); // MAX 92 LIGHTSOURCES
-    object.SetTexture(ImportImage(object, GL_LINEAR, "default.png"));
-    renderer.AttachObject(object);
+    Object *object = new Object({0, 0, 0}, {10, 10, 10}, {1, 1, 1, 1}, {1, 1, 1});
+    object->AttachBuffers(vertices, indices);
+    object->AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl", 1); // MAX 92 LIGHTSOURCES
+    object->SetTexture(ImportImage(*object, GL_LINEAR, "default.png"));
+    renderer->AttachObject(*object);
 
     vertices =
         {
@@ -211,28 +214,28 @@ int main()
             13, 15, 14  // Facing side
         };
 
-    object.SetPosition({1, 0, 0});
-    object.SetScale({1, 1, 1});
-    object.AttachBuffers(vertices, indices);
-    renderer.AttachObject(object);
+    object->SetPosition({1, 0, 0});
+    object->SetScale({1, 1, 1});
+    object->AttachBuffers(vertices, indices);
+    renderer->AttachObject(*object);
 
-    renderer.SetCamera(camera);
+    renderer->SetCamera(*camera);
 
-    lightSource.SetType(0);
-    renderer.AttachLightSource(lightSource);
+    lightSource->SetType(0);
+    renderer->AttachLightSource(*lightSource);
 
-    renderer.AttachPostprocess(postprocess);
+    renderer->AttachPostprocess(postprocess);
     // renderer.AttachPostprocess(postprocessShadows);
 
-    window.AttachRenderer(renderer);
+    window->AttachRenderer(*renderer);
 
     int frames = 0;
     double start = glfwGetTime();
 
-    while (!glfwWindowShouldClose(window.window))
+    while (!glfwWindowShouldClose(window->window))
     {
-        auto data = RendererLoop(window, frames);
-        window = data.first;
+        auto data = RendererLoop(*window, frames);
+        *window = data.first;
         frames = data.second;
     }
 
@@ -243,7 +246,7 @@ int main()
     std::cout << "Total Time:      " << sum << "s\n";
     std::cout << "Average FPS:     " << frames / sum << "\n";
 
-    window.Shutdown();
+    window->Shutdown();
 
     std::cin.get();
 }
