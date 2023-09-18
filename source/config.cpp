@@ -38,4 +38,4 @@ void Config::Save(std::string pPath, std::string pName)
 void Config::SetType(int pType) { type = pType; }
 void Config::SetConfig(std::string pConfig) { config = pConfig; }
 
-auto Config::GetParam(std::string pParamName) { return NULL; }
+auto Config::GetParam(std::string pParamGroup, std::string pParamName) { return NULL; }

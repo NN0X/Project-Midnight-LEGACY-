@@ -10,6 +10,7 @@
 
 #include "window.h"
 #include "config.h"
+#include "ndl.h"
 
 GLuint ImportImage(Object object, int textureFiltering, std::string path)
 {

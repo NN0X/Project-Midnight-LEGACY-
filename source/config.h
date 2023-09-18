@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <fstream>
+#include "ndl.h"
 #include "datatypes.h"
 
 class Config
@@ -19,5 +20,5 @@ public:
     void SetType(int pType);
     void SetConfig(std::string pConfig);
 
-    auto GetParam(std::string pParamName);
+    auto GetParam(std::string pParamGroup, std::string pParamName);
 };
