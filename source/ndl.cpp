@@ -5,6 +5,16 @@
 std::string GIS = ":{"; // Group Identifier Start
 std::string GIE = "}:"; // Group Identifier End
 
+std::vector<std::string> EXPL_TYPES = {
+    "int",
+    "ints",
+    "double",
+    "doubles",
+    "string",
+    "strings"
+
+};
+
 void NDL::CreateGroup(std::string pGroup, std::string pPath)
 {
     std::ofstream fileSave;
@@ -68,7 +78,7 @@ void NDL::CreateVariable(std::string pGroup, std::string pVariableExplType, std:
     {
         groupData += ndlData[index];
     }
-    groupData = groupData.substr(0, groupData.find("\n")) + "\n\t" + variableData + groupData.substr(groupData.find("\n"), groupData.length());
+    groupData = groupData.substr(0, groupData.find("\n")) + "\n" + variableData + groupData.substr(groupData.find("\n"), groupData.length());
     ndlData = ndlData.substr(0, ndlData.find(GIS)) + groupData + ndlData.substr(ndlData.find(GIE), ndlData.length());
     fileSave.open(pPath, std::ios::trunc);
     fileSave << ndlData;

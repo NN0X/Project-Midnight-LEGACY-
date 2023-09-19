@@ -4,21 +4,21 @@
 #include "ndl.h"
 #include "datatypes.h"
 
-class Config
+class Settings
 {
 private:
-    int type;
-    std::string config;
+    std::string description;
+    std::string settings;
 
 public:
-    Config();
-    Config(std::string pConfig, int pType);
+    Settings();
+    Settings(std::string pSettings, std::string pDescription);
 
     void Load(std::string pPath);
     void Save(std::string pPath, std::string pName);
 
-    void SetType(int pType);
-    void SetConfig(std::string pConfig);
+    void SetDescription(std::string pDescription);
+    void SetConfig(std::string pSettings);
 
     auto GetParam(std::string pParamGroup, std::string pParamName);
 };
