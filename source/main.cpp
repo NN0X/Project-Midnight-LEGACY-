@@ -233,6 +233,10 @@ int main()
     int frames = 0;
     double start = glfwGetTime();
 
+    NDL::CreateGroup("test", "resources/config.ndl");
+    NDL::CreateVariable("test", "bools", "testBools", "{true, false}", "resources/config.ndl");
+    NDL::LoadVariable("test", "testBools", "resources/config.ndl");
+
     while (!glfwWindowShouldClose(window->window))
     {
         auto data = RendererLoop(*window, frames);

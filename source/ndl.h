@@ -1,6 +1,7 @@
 ﻿// Nox Database Language prototype
 
 #include <fstream>
+#include <sstream>
 #include "datatypes.h"
 
 namespace NDL
@@ -10,6 +11,5 @@ namespace NDL
 
     void CreateVariable(std::string pGroup, std::string pVariableExplType, std::string pVariableName, std::string pVariableValue, std::string pPath);
     void DeleteVariable(std::string pGroup, std::string pVariableExplType, std::string pVariableName, std::string pVariableValue, std::string pPath);
-    auto LoadVariable(std::string pGroup, std::string pVariableName, std::string pPath);
-
+    int LoadVariable(std::string pGroup, std::string pVariableName, std::string pPath);
 }
