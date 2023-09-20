@@ -159,7 +159,6 @@
     <ClCompile Include="source\object.cpp" />
     <ClCompile Include="source\postprocess.cpp" />
     <ClCompile Include="source\renderer.cpp" />
-    <ClCompile Include="source\settings.cpp" />
     <ClCompile Include="source\shader.cpp" />
     <ClCompile Include="source\window.cpp" />
   </ItemGroup>
@@ -172,7 +171,6 @@
     <ClInclude Include="source\object.h" />
     <ClInclude Include="source\postprocess.h" />
     <ClInclude Include="source\renderer.h" />
-    <ClInclude Include="source\settings.h" />
     <ClInclude Include="source\shader.h" />
     <ClInclude Include="source\window.h" />
   </ItemGroup>

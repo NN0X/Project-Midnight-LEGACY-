@@ -1,4 +1,5 @@
 ﻿// Nox Database Language prototype
+#pragma once
 
 #include <fstream>
 #include <sstream>

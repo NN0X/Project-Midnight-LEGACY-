@@ -9,7 +9,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "window.h"
-#include "settings.h"
 #include "ndl.h"
 
 GLuint ImportImage(Object object, int textureFiltering, std::string path)
@@ -146,8 +145,6 @@ std::pair<Window, int> RendererLoop(Window window, int frames)
 
 int main()
 {
-    Settings *config = new Settings("", "");
-
     std::vector<GLfloat> vertices =
         {
             //   COORDINATES //  TexCoord  //  NORMALS       //
