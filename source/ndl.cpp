@@ -100,6 +100,51 @@ void NDL::DeleteVariable(std::string pGroup, std::string pVariableName, std::str
     fileSave.close();
 }
 
+bool NDL::LoadBool(std::string pGroup, std::string pVariableName, std::string pPath)
+{
+    std::ifstream fileLoad;
+    std::string ndlData;
+    std::string dataPart;
+    std::string groupData;
+    std::string variableData;
+
+    std::string value;
+
+    std::string ownGIS = pGroup + GIS;
+    std::string ownGIE = GIE + pGroup;
+
+    fileLoad.open(pPath);
+    while (getline(fileLoad, dataPart))
+    {
+        ndlData += dataPart + "\n";
+    }
+    fileLoad.close();
+    for (int index = ndlData.find(ownGIS) + ownGIS.length(); index < ndlData.find(ownGIE); index++)
+    {
+        groupData += ndlData[index];
+    }
+
+    std::stringstream groupDataStream(groupData);
+    while (getline(groupDataStream, variableData, '\n'))
+    {
+        if (variableData.find(pVariableName) != -1)
+        {
+            break;
+        }
+    }
+
+    value = variableData.substr(variableData.find(" = ") + 3, variableData.length());
+
+    if (value == "true")
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 double NDL::LoadNumber(std::string pGroup, std::string pVariableName, std::string pPath)
 {
     std::ifstream fileLoad;
@@ -176,9 +221,9 @@ std::string NDL::LoadString(std::string pGroup, std::string pVariableName, std::
     return value;
 }
 
-Vector2 NDL::LoadVector2(std::string pGroup, std::string pVariableName, std::string pPath)
+std::vector<int> NDL::LoadiVector(std::string pGroup, std::string pVariableName, std::string pPath)
 {
-    Vector2 valueFinal;
+    std::vector<int> valueFinal;
     std::ifstream fileLoad;
     std::string ndlData;
     std::string dataPart;
@@ -217,18 +262,27 @@ Vector2 NDL::LoadVector2(std::string pGroup, std::string pVariableName, std::str
         value.erase(value.find(" "), 1);
     }
 
-    std::string valueX = value.substr(0, value.find(","));
-    std::string valueY = value.substr(valueX.length() + 1, value.length());
-
-    valueFinal.x = stod(valueX);
-    valueFinal.y = stod(valueY);
+    std::string valuePart;
+    for (int index = 0; index < value.length(); index++)
+    {
+        if (value[index] == ',')
+        {
+            valueFinal.push_back(stoi(valuePart));
+            valuePart = "";
+        }
+        else
+        {
+            valuePart += value[index];
+        }
+    }
+    valueFinal.push_back(stoi(valuePart));
 
     return valueFinal;
 }
 
-Vector3 NDL::LoadVector3(std::string pGroup, std::string pVariableName, std::string pPath)
+std::vector<double> NDL::LoaddVector(std::string pGroup, std::string pVariableName, std::string pPath)
 {
-    Vector3 valueFinal;
+    std::vector<double> valueFinal;
     std::ifstream fileLoad;
     std::string ndlData;
     std::string dataPart;
@@ -267,13 +321,20 @@ Vector3 NDL::LoadVector3(std::string pGroup, std::string pVariableName, std::str
         value.erase(value.find(" "), 1);
     }
 
-    std::string valueX = value.substr(0, value.find(","));
-    std::string valueY = value.substr(valueX.length() + 1, value.substr(valueX.length() + 1, value.length()).find(","));
-    std::string valueZ = value.substr(valueX.length() + valueY.length() + 2, value.length());
-
-    valueFinal.x = stod(valueX);
-    valueFinal.y = stod(valueY);
-    valueFinal.z = stod(valueZ);
+    std::string valuePart;
+    for (int index = 0; index < value.length(); index++)
+    {
+        if (value[index] == ',')
+        {
+            valueFinal.push_back(stod(valuePart));
+            valuePart = "";
+        }
+        else
+        {
+            valuePart += value[index];
+        }
+    }
+    valueFinal.push_back(stod(valuePart));
 
     return valueFinal;
 }

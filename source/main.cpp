@@ -18,7 +18,7 @@ GLuint ImportImage(Object object, int textureFiltering, std::string path)
     int numCol;
 
     stbi_set_flip_vertically_on_load(true);
-    unsigned char *bytes = stbi_load(("resources/textures/" + path).data(), &size.x, &size.y, &numCol, 0);
+    unsigned char *bytes = stbi_load(path.data(), &size.x, &size.y, &numCol, 0);
 
     glGenTextures(1, &texture);
     glActiveTexture(GL_TEXTURE0);
@@ -145,6 +145,54 @@ std::pair<Window, int> RendererLoop(Window window, int frames)
 
 int main()
 {
+    // WINDOW CONFIG
+    iVector2 *windowSize = new iVector2(NDL::LoadiVector("window", "size", "resources/config.ndl"));
+    std::string windowTitle = NDL::LoadString("window", "title", "resources/config.ndl");
+    int windowMSAA = NDL::LoadNumber("window", "MSAA", "resources/config.ndl");
+    bool windowIsFullscreen = NDL::LoadBool("window", "fullscreen", "resources/config.ndl");
+    bool windowVSYNC = NDL::LoadBool("window", "vsync", "resources/config.ndl");
+    iVector2 *windowGLFWversion = new iVector2(NDL::LoadiVector("window", "glfw", "resources/config.ndl"));
+
+    // RENDERER CONFIG
+    iVector2 *rendererBegin = new iVector2(NDL::LoadiVector("renderer", "begin", "resources/config.ndl"));
+    iVector2 *rendererEnd = new iVector2(NDL::LoadiVector("renderer", "end", "resources/config.ndl"));
+    bool rendererMSAA = NDL::LoadBool("renderer", "MSAA", "resources/config.ndl");
+
+    // CAMERA CONFIG
+    Vector3 *cameraPosition = new Vector3(NDL::LoaddVector("camera", "position", "resources/config.ndl"));
+    Vector3 *cameraOrientation = new Vector3(NDL::LoaddVector("camera", "orientation", "resources/config.ndl"));
+    Vector3 *cameraUp = new Vector3(NDL::LoaddVector("camera", "up", "resources/config.ndl"));
+    Vector2 *cameraRotation = new Vector2(NDL::LoaddVector("camera", "rotation", "resources/config.ndl"));
+    double cameraFOV = NDL::LoadNumber("camera", "fov", "resources/config.ndl");
+    double cameraNearClipping = NDL::LoadNumber("camera", "nearClipping", "resources/config.ndl");
+    double cameraFarClipping = NDL::LoadNumber("camera", "farClipping", "resources/config.ndl");
+
+    // LIGHTSOURCE CONFIG
+    Vector3 *lightPosition = new Vector3(NDL::LoaddVector("light", "position", "resources/config.ndl"));
+    Vector3 *lightDirection = new Vector3(NDL::LoaddVector("light", "direction", "resources/config.ndl"));
+    dRGB *lightColor = new dRGB(NDL::LoaddVector("light", "color", "resources/config.ndl"));
+    double lightStrength = NDL::LoadNumber("light", "strength", "resources/config.ndl");
+    double lightAmbient = NDL::LoadNumber("light", "ambient", "resources/config.ndl");
+    double lightSpecular = NDL::LoadNumber("light", "specular", "resources/config.ndl");
+    double lightFalloff = NDL::LoadNumber("light", "falloff", "resources/config.ndl");
+    double lightInverseRange = NDL::LoadNumber("light", "inverseRange", "resources/config.ndl");
+    double lightInnerCone = NDL::LoadNumber("light", "innerCone", "resources/config.ndl");
+    double lightOuterCone = NDL::LoadNumber("light", "outerCone", "resources/config.ndl");
+
+    // SHADER CONFIG
+    std::string framebufferVertex = NDL::LoadString("shader", "framebufferVertex", "resources/config.ndl");
+    std::string framebufferFrag = NDL::LoadString("shader", "framebufferFrag", "resources/config.ndl");
+    std::string texturedVertex = NDL::LoadString("shader", "texturedVertex", "resources/config.ndl");
+    std::string texturedFrag = NDL::LoadString("shader", "texturedFrag", "resources/config.ndl");
+    int lightNumber = NDL::LoadNumber("shader", "lightNumber", "resources/config.ndl");
+
+    // OBJECT CONFIG
+    Vector3 *objectPosition = new Vector3(NDL::LoaddVector("object", "position", "resources/config.ndl"));
+    Vector3 *objectScale = new Vector3(NDL::LoaddVector("object", "scale", "resources/config.ndl"));
+    dRGBA *objectColor = new dRGBA(NDL::LoaddVector("object", "color", "resources/config.ndl"));
+    dRGB *objectEmission = new dRGB(NDL::LoaddVector("object", "emission", "resources/config.ndl"));
+    std::string objectTexture = NDL::LoadString("object", "texture", "resources/config.ndl");
+
     std::vector<GLfloat> vertices =
         {
             //   COORDINATES //  TexCoord  //  NORMALS       //
@@ -159,22 +207,22 @@ int main()
             0, 3, 1, 1, 2, 3 //
         };
 
-    Window *window = new Window({1000, 1000}, "Renderer", 4, false, false);
-    window->Init({4, 6});
-    Renderer *renderer = new Renderer({0, 0}, {1000, 1000}, true);
-    Camera *camera = new Camera({0, 0.5, 2}, {0, 0, -1}, {0, 1, 0}, {0, 0}, 45, 0.01, 100);
-    LightSource *lightSource = new LightSource({0, 1, 0}, {0, -1, 0}, {1, 1, 1}, 1, 0.3, 0.95, 0.5, 0.5, 0.95, 0.9);
+    Window *window = new Window(*windowSize, windowTitle, windowMSAA, windowIsFullscreen, windowVSYNC);
+    window->Init(*windowGLFWversion);
+    Renderer *renderer = new Renderer(*rendererBegin, *rendererEnd, rendererMSAA);
+    Camera *camera = new Camera(*cameraPosition, *cameraOrientation, *cameraUp, *cameraRotation, cameraFOV, cameraNearClipping, cameraFarClipping);
+    LightSource *lightSource = new LightSource(*lightPosition, *lightDirection, *lightColor, lightStrength, lightAmbient, lightSpecular, lightFalloff, lightInverseRange, lightInnerCone, lightOuterCone);
 
     Postprocess postprocess(renderer->GetSize(), window->GetMSAA(), 0);
-    postprocess.AttachShader("resources/shaders/framebufferVertex.glsl", "resources/shaders/framebufferFrag.glsl");
+    postprocess.AttachShader(framebufferVertex, framebufferFrag);
 
     // Postprocess postprocessShadows(renderer.GetSize(), 1);
     // postprocessShadows.AttachShader("resources/shaders/shadowMapVertex.glsl", "resources/shaders/shadowMapFrag.glsl");
 
-    Object *object = new Object({0, 0, 0}, {10, 10, 10}, {1, 1, 1, 1}, {1, 1, 1});
+    Object *object = new Object(*objectPosition, *objectScale, *objectColor, *objectEmission);
     object->AttachBuffers(vertices, indices);
-    object->AttachShader("resources/shaders/texturedVertex.glsl", "resources/shaders/texturedFrag.glsl", 1); // MAX 92 LIGHTSOURCES
-    object->SetTexture(ImportImage(*object, GL_LINEAR, "default.png"));
+    object->AttachShader(texturedVertex, texturedFrag, lightNumber); // MAX 92 LIGHTSOURCES
+    object->SetTexture(ImportImage(*object, GL_LINEAR, objectTexture));
     renderer->AttachObject(*object);
 
     vertices =

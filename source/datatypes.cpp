@@ -45,6 +45,14 @@ dRGBA::dRGBA(double pRed, double pGreen, double pBlue, double pAlpha)
     a = pAlpha;
 }
 
+dRGBA::dRGBA(std::vector<double> pColor)
+{
+    r = pColor[0];
+    g = pColor[1];
+    b = pColor[2];
+    a = pColor[3];
+}
+
 double dRGBA::Max()
 {
     std::vector<double> color = {r, g, b, a};
@@ -107,6 +115,13 @@ dRGB::dRGB(double pRed, double pGreen, double pBlue)
     b = pBlue;
 }
 
+dRGB::dRGB(std::vector<double> pColor)
+{
+    r = pColor[0];
+    g = pColor[1];
+    b = pColor[2];
+}
+
 double dRGB::Max()
 {
     std::vector<double> color = {r, g, b};
@@ -137,6 +152,12 @@ iVector2::iVector2(int pX, int pY)
     y = pY;
 }
 
+iVector2::iVector2(std::vector<int> pV)
+{
+    x = pV[0];
+    y = pV[1];
+}
+
 int iVector2::Max()
 {
     std::vector<int> vector = {x, y};
@@ -165,6 +186,12 @@ dVector2::dVector2(double pX, double pY)
 {
     x = pX;
     y = pY;
+}
+
+dVector2::dVector2(std::vector<double> pV)
+{
+    x = pV[0];
+    y = pV[1];
 }
 
 double dVector2::Max()
@@ -198,6 +225,13 @@ iVector3::iVector3(int pX, int pY, int pZ)
     z = pZ;
 }
 
+iVector3::iVector3(std::vector<int> pV)
+{
+    x = pV[0];
+    y = pV[1];
+    z = pV[2];
+}
+
 int iVector3::Max()
 {
     std::vector<int> vector = {x, y, z};
@@ -227,6 +261,13 @@ dVector3::dVector3(double pX, double pY, double pZ)
     x = pX;
     y = pY;
     z = pZ;
+}
+
+dVector3::dVector3(std::vector<double> pV)
+{
+    x = pV[0];
+    y = pV[1];
+    z = pV[2];
 }
 
 double dVector3::Max()

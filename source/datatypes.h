@@ -26,6 +26,7 @@ public:
 
     dRGBA();
     dRGBA(double pRed, double pGreen, double pBlue, double pAlpha);
+    dRGBA(std::vector<double> pColor);
 
     double Max();
     double Min();
@@ -52,6 +53,7 @@ public:
 
     dRGB();
     dRGB(double pRed, double pGreen, double pBlue);
+    dRGB(std::vector<double> pColor);
 
     double Max();
     double Min();
@@ -65,6 +67,7 @@ public:
 
     iVector2();
     iVector2(int pX, int pY);
+    iVector2(std::vector<int> pV);
 
     int Max();
     int Min();
@@ -78,6 +81,7 @@ public:
 
     dVector2();
     dVector2(double pX, double pY);
+    dVector2(std::vector<double> pV);
 
     double Max();
     double Min();
@@ -91,6 +95,7 @@ public:
 
     iVector3();
     iVector3(int pX, int pY, int pZ);
+    iVector3(std::vector<int> pV);
 
     int Max();
     int Min();
@@ -104,6 +109,7 @@ public:
 
     dVector3();
     dVector3(double pX, double pY, double pZ);
+    dVector3(std::vector<double> pV);
 
     double Max();
     double Min();
