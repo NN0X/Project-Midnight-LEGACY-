@@ -110,12 +110,10 @@ public:
     std::vector<double> Unpack();
 };
 
-// MOVE TO SETUP FILE
 typedef u8RGBA RGBA;
 typedef u8RGB RGB;
 typedef dVector2 Vector2;
 typedef dVector3 Vector3;
-//
 
 namespace Color
 {

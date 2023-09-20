@@ -5,18 +5,6 @@
 std::string GIS = ":{"; // Group Identifier Start
 std::string GIE = "}:"; // Group Identifier End
 
-std::vector<std::string> EXPL_TYPES = {
-    "bool",
-    "bools",
-    "int",
-    "ints",
-    "double",
-    "doubles",
-    "string",
-    "strings"
-
-};
-
 void NDL::CreateGroup(std::string pGroup, std::string pPath)
 {
     std::ofstream fileSave;
@@ -49,7 +37,7 @@ void NDL::DeleteGroup(std::string pGroup, std::string pPath)
     fileSave.close();
 }
 
-void NDL::CreateVariable(std::string pGroup, std::string pVariableExplType, std::string pVariableName, std::string pVariableValue, std::string pPath)
+void NDL::CreateVariable(std::string pGroup, std::string pVariableName, std::string pVariableValue, std::string pPath)
 {
     std::ifstream fileLoad;
     std::ofstream fileSave;
@@ -58,7 +46,7 @@ void NDL::CreateVariable(std::string pGroup, std::string pVariableExplType, std:
     std::string groupData;
     std::string variableData;
 
-    variableData = pVariableExplType + " " + pVariableName + " = " + pVariableValue;
+    variableData = pVariableName + " = " + pVariableValue;
 
     std::string ownGIS = pGroup + GIS;
     std::string ownGIE = GIE + pGroup;
@@ -80,7 +68,7 @@ void NDL::CreateVariable(std::string pGroup, std::string pVariableExplType, std:
     fileSave.close();
 }
 
-void NDL::DeleteVariable(std::string pGroup, std::string pVariableExplType, std::string pVariableName, std::string pVariableValue, std::string pPath)
+void NDL::DeleteVariable(std::string pGroup, std::string pVariableName, std::string pVariableValue, std::string pPath)
 {
     std::ifstream fileLoad;
     std::ofstream fileSave;
@@ -89,7 +77,7 @@ void NDL::DeleteVariable(std::string pGroup, std::string pVariableExplType, std:
     std::string groupData;
     std::string variableData;
 
-    variableData = pVariableExplType + " " + pVariableName + " = " + pVariableValue;
+    variableData = pVariableName + " = " + pVariableValue;
 
     std::string ownGIS = pGroup + GIS;
     std::string ownGIE = GIE + pGroup;
@@ -104,6 +92,7 @@ void NDL::DeleteVariable(std::string pGroup, std::string pVariableExplType, std:
     {
         groupData += ndlData[index];
     }
+
     groupData.replace(groupData.find(variableData), variableData.length(), "");
     ndlData = ndlData.substr(0, ndlData.find(ownGIS)) + groupData + ndlData.substr(ndlData.find(ownGIE), ndlData.length());
     fileSave.open(pPath, std::ios::trunc);
@@ -111,7 +100,7 @@ void NDL::DeleteVariable(std::string pGroup, std::string pVariableExplType, std:
     fileSave.close();
 }
 
-int NDL::LoadVariable(std::string pGroup, std::string pVariableName, std::string pPath)
+double NDL::LoadNumber(std::string pGroup, std::string pVariableName, std::string pPath)
 {
     std::ifstream fileLoad;
     std::string ndlData;
@@ -119,7 +108,6 @@ int NDL::LoadVariable(std::string pGroup, std::string pVariableName, std::string
     std::string groupData;
     std::string variableData;
 
-    std::string explType;
     std::string value;
 
     std::string ownGIS = pGroup + GIS;
@@ -131,7 +119,7 @@ int NDL::LoadVariable(std::string pGroup, std::string pVariableName, std::string
         ndlData += dataPart + "\n";
     }
     fileLoad.close();
-    for (int index = ndlData.find(ownGIS) + ownGIS.length(); index < ndlData.find(ownGIE) - ownGIE.length(); index++)
+    for (int index = ndlData.find(ownGIS) + ownGIS.length(); index < ndlData.find(ownGIE); index++)
     {
         groupData += ndlData[index];
     }
@@ -145,13 +133,147 @@ int NDL::LoadVariable(std::string pGroup, std::string pVariableName, std::string
         }
     }
 
-    explType = variableData.substr(0, variableData.find(pVariableName));
     value = variableData.substr(variableData.find(" = ") + 3, variableData.length());
 
-    Log::Log(variableData);
-    Log::Log(explType);
-    Log::Log(pVariableName);
-    Log::Log(value);
+    return stod(value);
+}
 
-    return 1;
+std::string NDL::LoadString(std::string pGroup, std::string pVariableName, std::string pPath)
+{
+    std::ifstream fileLoad;
+    std::string ndlData;
+    std::string dataPart;
+    std::string groupData;
+    std::string variableData;
+
+    std::string value;
+
+    std::string ownGIS = pGroup + GIS;
+    std::string ownGIE = GIE + pGroup;
+
+    fileLoad.open(pPath);
+    while (getline(fileLoad, dataPart))
+    {
+        ndlData += dataPart + "\n";
+    }
+    fileLoad.close();
+    for (int index = ndlData.find(ownGIS) + ownGIS.length(); index < ndlData.find(ownGIE); index++)
+    {
+        groupData += ndlData[index];
+    }
+
+    std::stringstream groupDataStream(groupData);
+    while (getline(groupDataStream, variableData, '\n'))
+    {
+        if (variableData.find(pVariableName) != -1)
+        {
+            break;
+        }
+    }
+
+    value = variableData.substr(variableData.find(" = ") + 3, variableData.length());
+
+    return value;
+}
+
+Vector2 NDL::LoadVector2(std::string pGroup, std::string pVariableName, std::string pPath)
+{
+    Vector2 valueFinal;
+    std::ifstream fileLoad;
+    std::string ndlData;
+    std::string dataPart;
+    std::string groupData;
+    std::string variableData;
+
+    std::string value;
+
+    std::string ownGIS = pGroup + GIS;
+    std::string ownGIE = GIE + pGroup;
+
+    fileLoad.open(pPath);
+    while (getline(fileLoad, dataPart))
+    {
+        ndlData += dataPart + "\n";
+    }
+    fileLoad.close();
+    for (int index = ndlData.find(ownGIS) + ownGIS.length(); index < ndlData.find(ownGIE); index++)
+    {
+        groupData += ndlData[index];
+    }
+
+    std::stringstream groupDataStream(groupData);
+    while (getline(groupDataStream, variableData, '\n'))
+    {
+        if (variableData.find(pVariableName) != -1)
+        {
+            break;
+        }
+    }
+
+    value = variableData.substr(variableData.find(" = ") + 3, variableData.length());
+
+    while (value.find(" ") != -1)
+    {
+        value.erase(value.find(" "), 1);
+    }
+
+    std::string valueX = value.substr(0, value.find(","));
+    std::string valueY = value.substr(valueX.length() + 1, value.length());
+
+    valueFinal.x = stod(valueX);
+    valueFinal.y = stod(valueY);
+
+    return valueFinal;
+}
+
+Vector3 NDL::LoadVector3(std::string pGroup, std::string pVariableName, std::string pPath)
+{
+    Vector3 valueFinal;
+    std::ifstream fileLoad;
+    std::string ndlData;
+    std::string dataPart;
+    std::string groupData;
+    std::string variableData;
+
+    std::string value;
+
+    std::string ownGIS = pGroup + GIS;
+    std::string ownGIE = GIE + pGroup;
+
+    fileLoad.open(pPath);
+    while (getline(fileLoad, dataPart))
+    {
+        ndlData += dataPart + "\n";
+    }
+    fileLoad.close();
+    for (int index = ndlData.find(ownGIS) + ownGIS.length(); index < ndlData.find(ownGIE); index++)
+    {
+        groupData += ndlData[index];
+    }
+
+    std::stringstream groupDataStream(groupData);
+    while (getline(groupDataStream, variableData, '\n'))
+    {
+        if (variableData.find(pVariableName) != -1)
+        {
+            break;
+        }
+    }
+
+    value = variableData.substr(variableData.find(" = ") + 3, variableData.length());
+
+    while (value.find(" ") != -1)
+    {
+        value.erase(value.find(" "), 1);
+    }
+
+    std::string valueX = value.substr(0, value.find(","));
+    std::string valueY = value.substr(valueX.length() + 1, value.substr(valueX.length() + 1, value.length()).find(","));
+    std::string valueZ = value.substr(valueX.length() + valueY.length() + 2, value.length());
+
+    valueFinal.x = stod(valueX);
+    valueFinal.y = stod(valueY);
+    valueFinal.z = stod(valueZ);
+
+    return valueFinal;
 }
