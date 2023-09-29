@@ -28,29 +28,6 @@ void Renderer::Draw()
     }
 }
 
-void Renderer::DrawPostprocessed()
-{
-    for (Postprocess postprocess : postprocesses)
-    {
-        postprocess.Use();
-        for (Object object : objects)
-        {
-            object.Draw(camera, lightSources, false);
-        }
-        postprocess.Draw();
-    }
-}
-
-void Renderer::AttachPostprocess(Postprocess pPostprocess)
-{
-    postprocesses.push_back(pPostprocess);
-}
-
-void Renderer::DetachPostprocess(int pIndex)
-{
-    postprocesses.erase(postprocesses.begin() + pIndex);
-}
-
 void Renderer::AttachLightSource(LightSource pLightSource)
 {
     lightSources.push_back(pLightSource);
@@ -101,7 +78,6 @@ iVector2 Renderer::GetSize() { return size; }
 iVector2 Renderer::GetBegin() { return begin; }
 iVector2 Renderer::GetEnd() { return end; }
 Camera Renderer::GetCamera() { return camera; }
-std::vector<Postprocess> Renderer::GetPostprocesses() { return postprocesses; }
 std::vector<LightSource> Renderer::GetLightSources() { return lightSources; }
 std::vector<Object> Renderer::GetObjects() { return objects; }
 bool Renderer::GetMSAA() { return MSAA; }

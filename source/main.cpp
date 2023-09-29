@@ -131,8 +131,7 @@ std::pair<Window, int> RendererLoop(Window window, int frames)
     renderer.SetCamera(camera);
     window.renderer = renderer;
 
-    // renderer.Draw();
-    renderer.DrawPostprocessed();
+    renderer.Draw();
 
     glfwSwapBuffers(window.window);
 
@@ -213,9 +212,6 @@ int main()
     Camera *camera = new Camera(*cameraPosition, *cameraOrientation, *cameraUp, *cameraRotation, cameraFOV, cameraNearClipping, cameraFarClipping);
     LightSource *lightSource = new LightSource(*lightPosition, *lightDirection, *lightColor, lightStrength, lightAmbient, lightSpecular, lightFalloff, lightInverseRange, lightInnerCone, lightOuterCone);
 
-    Postprocess postprocess(renderer->GetSize(), window->GetMSAA(), 0);
-    postprocess.AttachShader(framebufferVertex, framebufferFrag);
-
     // Postprocess postprocessShadows(renderer.GetSize(), 1);
     // postprocessShadows.AttachShader("resources/shaders/shadowMapVertex.glsl", "resources/shaders/shadowMapFrag.glsl");
 
@@ -269,9 +265,6 @@ int main()
 
     lightSource->SetType(0);
     renderer->AttachLightSource(*lightSource);
-
-    renderer->AttachPostprocess(postprocess);
-    // renderer.AttachPostprocess(postprocessShadows);
 
     window->AttachRenderer(*renderer);
 

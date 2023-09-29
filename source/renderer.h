@@ -4,7 +4,6 @@
 #include "camera.h"
 #include "lightSource.h"
 #include "object.h"
-#include "postprocess.h"
 
 class Renderer
 {
@@ -13,7 +12,6 @@ private:
     iVector2 begin;
     iVector2 end;
     Camera camera;
-    std::vector<Postprocess> postprocesses;
     std::vector<LightSource> lightSources;
     std::vector<Object> objects;
     bool MSAA;
@@ -23,9 +21,6 @@ public:
     Renderer(iVector2 pBegin, iVector2 pEnd, bool pMSAA);
 
     void Draw();
-    void DrawPostprocessed();
-    void AttachPostprocess(Postprocess pPostprocess);
-    void DetachPostprocess(int pIndex);
     void AttachLightSource(LightSource pLightSource);
     void DetachLightSource(int pIndex);
     void AttachObject(Object pObject);
@@ -40,7 +35,6 @@ public:
     iVector2 GetBegin();
     iVector2 GetEnd();
     Camera GetCamera();
-    std::vector<Postprocess> GetPostprocesses();
     std::vector<LightSource> GetLightSources();
     std::vector<Object> GetObjects();
     bool GetMSAA();

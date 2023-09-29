@@ -45,9 +45,6 @@
     <ClCompile Include="source\shader.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="source\postprocess.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="source\datatypes.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -75,9 +72,6 @@
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="source\shader.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="source\postprocess.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="source\datatypes.h">
