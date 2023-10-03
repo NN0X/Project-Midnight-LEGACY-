@@ -1,0 +1,123 @@
+﻿  main.cpp
+D:\Dev\Project-Midnight\source\main.cpp(150,20): warning C4244: "inicjowanie": konwersja z "double" do "int", możliwa utrata danych
+D:\Dev\Project-Midnight\source\main.cpp(184,21): warning C4244: "inicjowanie": konwersja z "double" do "int", możliwa utrata danych
+D:\Dev\Project-Midnight\source\main.cpp(201,34): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(202,35): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(203,16): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(203,33): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(205,43): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(206,42): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(207,16): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(207,41): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(209,33): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(210,32): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(211,16): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(211,32): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(213,40): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(214,41): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(215,16): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+D:\Dev\Project-Midnight\source\main.cpp(215,40): warning C4305: "inicjowanie": obcięcie z "double" do "_Ty"
+          with
+          [
+              _Ty=GLfloat
+          ]
+  object.cpp
+D:\Dev\Project-Midnight\source\object.cpp(67,93): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(67,84): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(67,75): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(68,142): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(68,117): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(68,92): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(69,102): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(69,93): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(69,84): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(69,75): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(70,105): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(70,93): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(70,81): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(80,125): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(80,113): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(80,101): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(81,185): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(81,155): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(81,125): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(99,169): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(99,143): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(99,117): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(100,176): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(100,147): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(100,118): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(101,185): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(101,155): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(101,125): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(102,119): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(103,118): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(104,122): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(105,127): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(106,132): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(107,120): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+D:\Dev\Project-Midnight\source\object.cpp(108,120): warning C4244: "argument": konwersja z "double" do "GLfloat", możliwa utrata danych
+  renderer.cpp
+  window.cpp
+  Generowanie kodu...
+  Project-Midnight.vcxproj -> D:\Dev\Project-Midnight\x64\Debug\Project-Midnight.exe

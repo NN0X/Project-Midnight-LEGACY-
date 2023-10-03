@@ -1,0 +1,51 @@
+window:{
+	size = 1000, 1000
+	title = Project Midnight
+	MSAA = 4
+	fullscreen = false
+	vsync = false
+	glfw = 4, 6
+}:window
+
+renderer:{
+	begin = 0, 0
+	end = 1000, 1000
+	MSAA = true
+}:renderer
+
+camera:{
+	position = 0, 0.5, 2
+	orientation = 0, 0, -1
+	up = 0, 1, 0
+	rotation = 0, 0
+	fov = 45
+	nearClipping = 0.01
+	farClipping = 100
+}:camera
+
+light:{
+	position = 0, 1, 0
+	direction = 0, -1, 0
+	color = 1, 1, 1
+	strength = 1
+	ambient = 0.3
+	specular = 0.95
+	falloff = 0.5
+	inverseRange = 0.5
+	innerCone = 0.95
+	outerCone = 0.9
+}:light
+
+shader:{
+	texturedVertex = resources/shaders/texturedVertex.glsl
+	texturedFrag = resources/shaders/texturedFrag.glsl
+	lightNumber = 1
+}:shader
+
+object:{
+	position = 0, 0, 0
+	scale = 1, 1, 1
+	color = 1, 1, 1, 1
+	emission = 1, 1, 1
+	texture = resources/textures/default.png
+}:object
