@@ -24,12 +24,17 @@ private:
     GLuint texture;
     int sizeOfVertices;
     int sizeOfIndices;
+    bool isFont;
+    bool drawnOnCamera;
 
 public:
     Object();
     Object(dVector3 pPosition, dVector3 pScale, dRGBA pColor, dRGB pEmission);
+    Object(dVector3 pPosition, dVector3 pScale, dRGBA pColor, dRGB pEmission, bool pIsFont);
+    Object(dVector3 pPosition, dVector3 pScale, dRGBA pColor, dRGB pEmission, bool pIsFont, bool pDrawnOnCamera);
 
     void Draw(Camera pCamera, std::vector<LightSource> pLightSources, bool pMSAA);
+    void DrawFont(Camera pCamera);
     void AttachBuffers(std::vector<GLfloat> pObjectVertices, std::vector<GLuint> pObjectIndices);
     void DetachBuffers();
     void AttachShader(std::string pPathVertex, std::string pPathFragment, int pLightsNumber);
@@ -42,6 +47,8 @@ public:
     void SetShader(GLuint pShaderProgram);
     void SetTexture(GLuint pTexture);
     void SetSizeOfIndices(int pSizeOfIndices);
+    void SetIsFont(bool pIsFont);
+    void SetDrawnOnCamera(bool pDrawnOnCamera);
 
     dVector3 GetPosition();
     dVector3 GetScale();
@@ -52,4 +59,6 @@ public:
     GLuint GetVAO();
     GLuint GetTexture();
     int GetSizeOfIndices();
+    bool GetIsFont();
+    bool GetDrawnOnCamera();
 };
